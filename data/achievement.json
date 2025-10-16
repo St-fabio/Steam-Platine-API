@@ -1,0 +1,18 @@
+{
+    "achievements": [
+        {
+            "api_name": "ACHIEVEMENT_ENDLESS_DAY",
+            "name": "Endless Day",
+            "game_appid": "208140",
+            "description": "…the galaxy as the Archivist, Emlek Tarosh, fulfills its duty.",
+            "icon": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/208140/990aff7000aa5023237ad771f0ec4f3812a5a2aa.jpg"
+        },
+        {
+            "api_name": "CHESS_MATE",
+            "name": "CHESS_MATE",
+            "game_appid": "208140",
+            "description": "Win a Supremacy Victory by capturing 4 home worlds within the same turn",
+            "icon": "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/208140/6563d7d69fe9e53e6e199fc8ff90111dc4e555d5.jpg"
+        }
+    ]
+}

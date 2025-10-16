@@ -1,0 +1,611 @@
+openapi: 3.0.2
+info:
+  title: Steam User Platine API
+  version: 1.0.0
+  description: >
+    API centrée sur un utilisateur Steam, permettant de consulter ses jeux,
+    ses succès et de vérifier ses "platines" (jeux complétés à 100%).
+  contact:
+    name: Brambilla Fabio
+    email: fabio.brambilla@etu.univ-grenoble-alpes.fr
+
+servers:
+  - url: https://api.mondomaine.com/v1
+
+paths:
+  /:
+    get:
+      summary: Page d'accueil de l'API
+      description: >
+        Fournit des informations générales sur l'API et ses fonctionnalités.
+      responses:
+        '200':
+          description: Page d'accueil de l'API
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Bienvenue sur l'API Steam User Platine!"
+  
+  /users:
+    get:
+      tags: [Users]
+      summary: Récupérer la liste des utilisateurs
+      description: >
+        Retourne une liste de tous les utilisateurs Steam enregistrés dans le système.
+      responses:
+        '200':
+          description: Liste des utilisateurs
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /users/{userId}:
+    get:
+      tags: [Users]
+      summary: Récupérer les détails d'un utilisateur
+      description: >
+        Retourne les informations détaillées d'un utilisateur Steam spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails de l'utilisateur
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: Utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Utilisateur non trouvé"
+    post:
+      tags: [Users]
+      summary: Ajouter un nouvel utilisateur
+      description: >
+        Permet d'ajouter un nouvel utilisateur Steam au système.
+      requestBody:
+        description: Détails de l'utilisateur à ajouter
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Utilisateur créé avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Requête invalide
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Données utilisateur invalides"
+    put:
+      tags: [Users]
+      summary: Mettre à jour un utilisateur existant
+      description: >
+        Permet de mettre à jour les informations d'un utilisateur Steam spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      requestBody:
+        description: Nouvelles données de l'utilisateur
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: Utilisateur mis à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Requête invalide
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Données utilisateur invalides"
+        '404':
+          description: Utilisateur non trouvé
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Utilisateur non trouvé"
+    delete:
+      tags: [Users]
+      summary: Supprimer un utilisateur
+      description: >
+        Permet de supprimer un utilisateur Steam spécifique du système.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Utilisateur supprimé avec succès
+  
+  /users/{userId}/games:
+    get:
+      tags: [Users]
+      summary: Récupérer les jeux d'un utilisateur
+      description: >
+        Retourne la liste des jeux possédés par un utilisateur Steam spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des jeux de l'utilisateur
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+    post:
+      tags: [Users]
+      summary: Raffraîchir les jeux d'un utilisateur
+      description: >
+        Permet de mettre à jour la liste des jeux d'un utilisateur Steam en fonction des données les plus récentes.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des jeux mise à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+  /users/{userId}/games/{gameId}/achievements:
+    get:
+      tags: [Users]
+      summary: Récupérer les succès d'un jeu pour un utilisateur
+      description: >
+        Retourne la liste des succès obtenus par un utilisateur Steam pour un jeu spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+        - name: gameId
+          in: path
+          required: true
+          description: ID unique du jeu Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des succès du jeu pour l'utilisateur
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Achievement'
+  /users/{userId}/platinums:
+    get:
+      tags: [Users]
+      summary: Récupérer les jeux "platinés" d'un utilisateur
+      description: >
+        Retourne la liste des jeux que l'utilisateur Steam a complétés à 100%.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des jeux platinés de l'utilisateur
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+  /users/{userId}/stats:
+    get:
+      tags: [Users]
+      summary: Récupérer les statistiques d'un utilisateur
+      description: >
+        Retourne des statistiques agrégées pour un utilisateur Steam spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Statistiques de l'utilisateur
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalGames:
+                    type: integer
+                    example: 42
+                  totalPlaytime:
+                    type: integer
+                    description: Temps de jeu total en minutes
+                    example: 5678
+                  platinumCount:
+                    type: integer
+                    description: Nombre de jeux platinés
+                    example: 10
+  /users/{userId}/platinum_advice:
+    get:
+      tags: [Users]
+      summary: Renvoie les prochains jeux à platiner
+      description: >
+        Fournit une liste de jeux recommandés que l'utilisateur pourrait envisager de compléter à 100%.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des jeux recommandés pour la platine
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+  /games:
+    get:
+      tags: [Games]
+      summary: Récupérer la liste des jeux
+      description: >
+        Retourne une liste de tous les jeux disponibles dans le système.
+      responses:
+        '200':
+          description: Liste des jeux
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+  /games/{gameId}:
+    get:
+      tags: [Games]
+      summary: Récupérer les détails d'un jeu
+      description: >
+        Retourne les informations détaillées d'un jeu spécifique.
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          description: ID unique du jeu Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails du jeu
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+  /games/{gameId}/achievements:
+    get:
+      tags: [Games]
+      summary: Récupérer les succès d'un jeu
+      description: >
+        Retourne la liste des succès disponibles pour un jeu spécifique.
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          description: ID unique du jeu Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des succès du jeu
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Achievement'
+  /games/{gameId}/achievements/{achievementId}:
+    get:
+      tags: [Games]
+      summary: Récupérer les détails d'un succès
+      description: >
+        Retourne les informations détaillées d'un succès spécifique pour un jeu.
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          description: ID unique du jeu Steam
+          schema:
+            type: string
+        - name: achievementId
+          in: path
+          required: true
+          description: ID unique du succès Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails du succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Achievement'
+  /category:
+    get:
+      tags: [Category]
+      summary: Récupérer les catégories de jeux
+      description: >
+        Retourne une liste des catégories de jeux disponibles dans le système.
+      responses:
+        '200':
+          description: Liste des catégories de jeux
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+                  example: "Action"
+                  $ref: '#/components/schemas/Category'
+  /category/{categoryName}:
+    get:
+      tags: [Category]
+      summary: Récupérer les détails d'une catégorie
+      description: >
+        Retourne les informations détaillées d'une catégorie de jeux spécifique.
+      parameters:
+        - name: categoryName
+          in: path
+          required: true
+          description: Nom de la catégorie de jeux
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Détails de la catégorie
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+  /category/{categoryName}/games:
+    get:
+      tags: [Category]
+      summary: Récupérer les jeux par catégorie
+      description: >
+        Retourne une liste des jeux appartenant à une catégorie spécifique.
+      parameters:
+        - name: categoryName
+          in: path
+          required: true
+          description: Nom de la catégorie de jeux
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des jeux dans la catégorie spécifiée
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+  /category/{categoryName}/stats:
+    get:
+      tags: [Category]
+      summary: Récupérer les statistiques d'une catégorie
+      description: >
+        Retourne des statistiques agrégées pour une catégorie de jeux spécifique.
+      parameters:
+        - name: categoryName
+          in: path
+          required: true
+          description: Nom de la catégorie de jeux
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Statistiques de la catégorie spécifiée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalGames:
+                    type: integer
+                    example: 150
+                  averagePlaytime:
+                    type: integer
+                    description: Temps de jeu moyen en minutes
+                    example: 300
+                  platinumCount:
+                    type: integer
+                    description: Nombre de jeux platinés dans cette catégorie
+                    example: 25
+    post:
+      tags: [Category]
+      summary: Raffraîchir les stats d'une catégorie de jeux
+      description: >
+        Permet de mettre à jour les statistiques d'une catégorie de jeux en fonction des données les plus récentes.
+      parameters:
+        - name: categoryName
+          in: path
+          required: true
+          description: Nom de la catégorie de jeux
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Statistiques de la catégorie mises à jour avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '404':
+          description: Catégorie de jeux non trouvée
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Catégorie de jeux non trouvée"
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - id
+        - username
+      properties:
+        steamId:
+          type: string
+          description: ID unique de l'utilisateur Steam
+          example: "76561198000000000"
+        username:
+          type: string
+          description: Nom d'affichage de l'utilisateur
+          example: "FabioGamer"
+        profileUrl:
+          type: string
+          description: URL du profil Steam
+          example: "https://steamcommunity.com/id/fabiogamer"
+        avatarUrl:
+          type: string
+          format: uri
+          description: URL de l'avatar de l'utilisateur
+          example: "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/fb/fb123456789.jpg"
+    
+    Game:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        appId:
+          type: integer
+          description: ID officiel Steam App
+          example: 570
+        name:
+          type: string
+          description: Nom du jeu
+          example: "Dota 2"
+        playtime:
+          type: integer
+          description: Temps de jeu total en minutes
+          example: 1234
+        iconUrl:
+          type: string
+          format: uri
+          description: URL de l'icône du jeu
+          example: "https://steamcdn-a.akamaihd.net/steam/apps/570/header.jpg"
+        isPlatinum:
+          type: boolean
+          description: Indique si l'utilisateur a complété le jeu à 100%
+          example: true
+
+    Achievement:
+      type: object
+      required:
+        - id
+        - name
+      properties:
+        id:
+          type: string
+          description: ID unique du succès
+          example: "1"
+        name:
+          type: string
+          description: Nom du succès
+          example: "Maîtrise Totale"
+        description:
+          type: string
+          description: Description du succès
+          example: "Terminer toutes les quêtes principales"
+        achieved:
+          type: boolean
+          description: Indique si le succès a été débloqué par l'utilisateur
+          example: true
+        unlockTime:
+          type: string
+          format: date-time
+          description: Date et heure à laquelle le succès a été débloqué
+          example: "2024-10-15T14:30:00Z"
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nom de la catégorie de jeu
+          example: "Action"
+        description:
+          type: string
+          description: Description de la catégorie de jeu
+          example: "Jeux axés sur l'action rapide et les réflexes"  
