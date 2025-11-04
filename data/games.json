@@ -1,8 +1,8 @@
 {
-    "games": [
-        {
+    "games": {
+        "208140": {
             "appId": 208140,
             "name": "Endless Space - Definitive Edition"
         }
-    ]
+    }
 }

@@ -1,8 +1,16 @@
 {
-    "users": [
-        {
-            "steamId": "76561198966626304",
-            "username": "st-fabio"
-        }
-    ]
+  "users": {
+    "76561198966626304": {
+      "steamId": "76561198966626304",
+      "username": "st-fabio",
+      "games": [
+        208140
+      ]
+    },
+    "76561198000000000": {
+      "steamId": "76561198000000000",
+      "username": "example_user",
+      "games": []
+    }
+  }
 }
