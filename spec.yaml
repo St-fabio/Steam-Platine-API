@@ -313,6 +313,77 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Game'
+  
+  /users/{userId}/friends:
+    get:
+      tags: [Users]
+      summary: Récupérer la liste des amis d'un utilisateur
+      description: >
+        Retourne la liste des amis Steam associés à un utilisateur spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des amis de l'utilisateur
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+    post:
+      tags: [Users]
+      summary: Ajouter un ami à un utilisateur
+      description: >
+        Permet d'ajouter un ami à la liste d'amis d'un utilisateur Steam spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      requestBody:
+        description: Détails de l'ami à ajouter
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Ami ajouté avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      tags: [Users]
+      summary: Supprimer un ami d'un utilisateur
+      description: >
+        Permet de supprimer un ami de la liste d'amis d'un utilisateur Steam spécifique.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+        - name: friendId
+          in: query
+          required: true
+          description: ID unique de l'ami à supprimer
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Ami supprimé avec succès
+  
   /games:
     get:
       tags: [Games]
