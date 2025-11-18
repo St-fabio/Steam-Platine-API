@@ -291,6 +291,37 @@ paths:
                     type: integer
                     description: Nombre de jeux platinés
                     example: 10
+    post:
+      tags: [Users]
+      summary: Raffraîchir les stats d'un utilisateur
+      description: >
+        Permet de mettre à jour les statistiques d'un utilisateur Steam en fonction des données les plus récentes.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: ID unique de l'utilisateur Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Statistiques de l'utilisateur mises à jour avec succès
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  totalGames:
+                    type: integer
+                    example: 43
+                  totalPlaytime:
+                    type: integer
+                    description: Temps de jeu total en minutes
+                    example: 5800
+                  platinumCount:
+                    type: integer
+                    description: Nombre de jeux platinés
+                    example: 11
   /users/{userId}/platinum_advice:
     get:
       tags: [Users]
@@ -435,6 +466,27 @@ paths:
       responses:
         '200':
           description: Liste des succès du jeu
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Achievement'
+    post:
+      tags: [Games]
+      summary: Raffraîchir les succès d'un jeu
+      description: >
+        Permet de mettre à jour la liste des succès d'un jeu en fonction des données les plus récentes.
+      parameters:
+        - name: gameId
+          in: path
+          required: true
+          description: ID unique du jeu Steam
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Liste des succès mise à jour avec succès
           content:
             application/json:
               schema:

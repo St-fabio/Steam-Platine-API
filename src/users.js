@@ -6,7 +6,7 @@ import get_player_achievement from "./APICall/get_player_achievement.js";
 import get_all_games from "./APICall/get_all_games.js";
 import get_all_achievement_data from "./APICall/get_all_achievement_data.js";get_all_achievement_data
 
-import { readFileSync, writeFileSync } from 'fs';
+import { writeFileSync } from 'fs';
 import get_next_platine_advice from "./functions/get_next_platine_advice.js";
 
 export function getUsers(req, res) {
