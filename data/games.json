@@ -1,8 +1,1427 @@
 {
-    "games": {
-        "208140": {
-            "appId": 208140,
-            "name": "Endless Space - Definitive Edition"
-        }
+  "games": {
+    "20": {
+      "appid": 20,
+      "name": "Team Fortress Classic",
+      "have_success": false
+    },
+    "50": {
+      "appid": 50,
+      "name": "Half-Life: Opposing Force",
+      "have_success": false
+    },
+    "70": {
+      "appid": 70,
+      "name": "Half-Life",
+      "have_success": false
+    },
+    "130": {
+      "appid": 130,
+      "name": "Half-Life: Blue Shift",
+      "have_success": false
+    },
+    "220": {
+      "appid": 220,
+      "name": "Half-Life 2",
+      "have_success": true
+    },
+    "280": {
+      "appid": 280,
+      "name": "Half-Life: Source"
+    },
+    "320": {
+      "appid": 320,
+      "name": "Half-Life 2: Deathmatch",
+      "have_success": false
+    },
+    "360": {
+      "appid": 360,
+      "name": "Half-Life Deathmatch: Source",
+      "have_success": false
+    },
+    "400": {
+      "appid": 400,
+      "name": "Portal",
+      "have_success": true
+    },
+    "440": {
+      "appid": 440,
+      "name": "Team Fortress 2"
+    },
+    "550": {
+      "appid": 550,
+      "name": "Left 4 Dead 2"
+    },
+    "620": {
+      "appid": 620,
+      "name": "Portal 2",
+      "have_success": true
+    },
+    "730": {
+      "appid": 730,
+      "name": "Counter-Strike 2",
+      "have_success": true
+    },
+    "2280": {
+      "appid": 2280,
+      "name": "DOOM + DOOM II",
+      "have_success": true
+    },
+    "2300": {
+      "appid": 2300,
+      "name": "DOOM II",
+      "have_success": false
+    },
+    "3590": {
+      "appid": 3590,
+      "name": "Plants vs. Zombies: Game of the Year",
+      "have_success": true
+    },
+    "4000": {
+      "appid": 4000,
+      "name": "Garry's Mod",
+      "have_success": true
+    },
+    "6000": {
+      "appid": 6000,
+      "name": "STAR WARS™ Republic Commando",
+      "have_success": false
+    },
+    "6060": {
+      "appid": 6060,
+      "name": "Star Wars: Battlefront 2 (Classic, 2005)",
+      "have_success": false
+    },
+    "6850": {
+      "appid": 6850,
+      "name": "Hitman 2: Silent Assassin"
+    },
+    "6860": {
+      "appid": 6860,
+      "name": "Hitman: Blood Money"
+    },
+    "6900": {
+      "appid": 6900,
+      "name": "Hitman: Codename 47"
+    },
+    "6910": {
+      "appid": 6910,
+      "name": "Deus Ex: Game of the Year Edition"
+    },
+    "6920": {
+      "appid": 6920,
+      "name": "Deus Ex: Invisible War"
+    },
+    "9160": {
+      "appid": 9160,
+      "name": "Master Levels for DOOM II",
+      "have_success": false
+    },
+    "20900": {
+      "appid": 20900,
+      "name": "The Witcher: Enhanced Edition"
+    },
+    "20920": {
+      "appid": 20920,
+      "name": "The Witcher 2: Assassins of Kings Enhanced Edition"
+    },
+    "21130": {
+      "appid": 21130,
+      "name": "LEGO® Harry Potter: Years 1-4",
+      "have_success": false
+    },
+    "22120": {
+      "appid": 22120,
+      "name": "Penumbra: Black Plague",
+      "have_success": false
+    },
+    "22140": {
+      "appid": 22140,
+      "name": "Penumbra: Requiem",
+      "have_success": false
+    },
+    "22180": {
+      "appid": 22180,
+      "name": "Penumbra: Overture",
+      "have_success": false
+    },
+    "22330": {
+      "appid": 22330,
+      "name": "The Elder Scrolls IV: Oblivion Game of the Year Edition (2009)",
+      "have_success": false
+    },
+    "22370": {
+      "appid": 22370,
+      "name": "Fallout 3 - Game of the Year Edition"
+    },
+    "22380": {
+      "appid": 22380,
+      "name": "Fallout: New Vegas"
+    },
+    "24240": {
+      "appid": 24240,
+      "name": "PAYDAY: The Heist"
+    },
+    "32350": {
+      "appid": 32350,
+      "name": "STAR WARS™ Starfighter™",
+      "have_success": false
+    },
+    "32370": {
+      "appid": 32370,
+      "name": "STAR WARS™ Knights of the Old Republic™",
+      "have_success": false
+    },
+    "32390": {
+      "appid": 32390,
+      "name": "STAR WARS™ Jedi Knight: Mysteries of the Sith™",
+      "have_success": false
+    },
+    "32440": {
+      "appid": 32440,
+      "name": "LEGO® Star Wars™: The Complete Saga",
+      "have_success": false
+    },
+    "32510": {
+      "appid": 32510,
+      "name": "LEGO® Star Wars™ III: The Clone Wars™",
+      "have_success": false
+    },
+    "35140": {
+      "appid": 35140,
+      "name": "Batman: Arkham Asylum GOTY Edition"
+    },
+    "38400": {
+      "appid": 38400,
+      "name": "Fallout"
+    },
+    "38410": {
+      "appid": 38410,
+      "name": "Fallout 2"
+    },
+    "39140": {
+      "appid": 39140,
+      "name": "FINAL FANTASY VII",
+      "have_success": true
+    },
+    "39210": {
+      "appid": 39210,
+      "name": "FINAL FANTASY XIV Online",
+      "have_success": false
+    },
+    "39540": {
+      "appid": 39540,
+      "name": "SpellForce: Platinum Edition",
+      "have_success": false
+    },
+    "39680": {
+      "appid": 39680,
+      "name": "The Guild II: Renaissance",
+      "have_success": false
+    },
+    "43160": {
+      "appid": 43160,
+      "name": "Metro: Last Light Complete Edition",
+      "have_success": true
+    },
+    "45760": {
+      "appid": 45760,
+      "name": "Ultra Street Fighter IV",
+      "have_success": true
+    },
+    "47810": {
+      "appid": 47810,
+      "name": "Dragon Age: Origins - Ultimate Edition",
+      "have_success": false
+    },
+    "65800": {
+      "appid": 65800,
+      "name": "Dungeon Defenders"
+    },
+    "65980": {
+      "appid": 65980,
+      "name": "Sid Meier's Civilization: Beyond Earth",
+      "have_success": true
+    },
+    "72850": {
+      "appid": 72850,
+      "name": "The Elder Scrolls V: Skyrim",
+      "have_success": true
+    },
+    "105600": {
+      "appid": 105600,
+      "name": "Terraria",
+      "have_success": true
+    },
+    "108600": {
+      "appid": 108600,
+      "name": "Project Zomboid",
+      "have_success": false
+    },
+    "200260": {
+      "appid": 200260,
+      "name": "Batman: Arkham City GOTY"
+    },
+    "203140": {
+      "appid": 203140,
+      "name": "Hitman: Absolution"
+    },
+    "203160": {
+      "appid": 203160,
+      "name": "Tomb Raider"
+    },
+    "204120": {
+      "appid": 204120,
+      "name": "LEGO® Harry Potter: Years 5-7"
+    },
+    "205100": {
+      "appid": 205100,
+      "name": "Dishonored"
+    },
+    "205930": {
+      "appid": 205930,
+      "name": "Hitman: Sniper Challenge"
+    },
+    "207350": {
+      "appid": 207350,
+      "name": "Ys Origin",
+      "have_success": true
+    },
+    "207490": {
+      "appid": 207490,
+      "name": "Rayman Origins",
+      "have_success": false
+    },
+    "208140": {
+      "appid": 208140,
+      "name": "ENDLESS™ Space - Definitive Edition",
+      "have_success": true
+    },
+    "208650": {
+      "appid": 208650,
+      "name": "Batman™: Arkham Knight"
+    },
+    "209000": {
+      "appid": 209000,
+      "name": "Batman™: Arkham Origins"
+    },
+    "212680": {
+      "appid": 212680,
+      "name": "FTL: Faster Than Light",
+      "have_success": true
+    },
+    "214510": {
+      "appid": 214510,
+      "name": "LEGO® The Lord of the Rings™",
+      "have_success": true
+    },
+    "218620": {
+      "appid": 218620,
+      "name": "PAYDAY 2",
+      "have_success": true
+    },
+    "219150": {
+      "appid": 219150,
+      "name": "Hotline Miami",
+      "have_success": true
+    },
+    "220240": {
+      "appid": 220240,
+      "name": "Far Cry® 3"
+    },
+    "224060": {
+      "appid": 224060,
+      "name": "Deadpool"
+    },
+    "226580": {
+      "appid": 226580,
+      "name": "F1 2014"
+    },
+    "233270": {
+      "appid": 233270,
+      "name": "Far Cry® 3 Blood Dragon"
+    },
+    "235460": {
+      "appid": 235460,
+      "name": "METAL GEAR RISING: REVENGEANCE"
+    },
+    "236430": {
+      "appid": 236430,
+      "name": "DARK SOULS™ II",
+      "have_success": true
+    },
+    "237630": {
+      "appid": 237630,
+      "name": "DuckTales Remastered",
+      "have_success": true
+    },
+    "238010": {
+      "appid": 238010,
+      "name": "Deus Ex: Human Revolution - Director's Cut"
+    },
+    "238090": {
+      "appid": 238090,
+      "name": "Sniper Elite 3",
+      "have_success": true
+    },
+    "241930": {
+      "appid": 241930,
+      "name": "Middle-earth™: Shadow of Mordor™",
+      "have_success": true
+    },
+    "242050": {
+      "appid": 242050,
+      "name": "Assassin's Creed IV Black Flag"
+    },
+    "244160": {
+      "appid": 244160,
+      "name": "Homeworld Remastered Collection",
+      "have_success": true
+    },
+    "247080": {
+      "appid": 247080,
+      "name": "Crypt of the NecroDancer",
+      "have_success": true
+    },
+    "247430": {
+      "appid": 247430,
+      "name": "Hitman: Contracts"
+    },
+    "247660": {
+      "appid": 247660,
+      "name": "Deadly Premonition: The Director's Cut",
+      "have_success": true
+    },
+    "249050": {
+      "appid": 249050,
+      "name": "Dungeon of the ENDLESS™",
+      "have_success": true
+    },
+    "250320": {
+      "appid": 250320,
+      "name": "The Wolf Among Us"
+    },
+    "250900": {
+      "appid": 250900,
+      "name": "The Binding of Isaac: Rebirth",
+      "have_success": true
+    },
+    "252410": {
+      "appid": 252410,
+      "name": "SteamWorld Dig"
+    },
+    "254700": {
+      "appid": 254700,
+      "name": "Resident Evil 4 (2005)",
+      "have_success": true
+    },
+    "258180": {
+      "appid": 258180,
+      "name": "Deus Ex: The Fall"
+    },
+    "261570": {
+      "appid": 261570,
+      "name": "Ori and the Blind Forest",
+      "have_success": true
+    },
+    "262060": {
+      "appid": 262060,
+      "name": "Darkest Dungeon®",
+      "have_success": true
+    },
+    "262150": {
+      "appid": 262150,
+      "name": "Vanguard Princess",
+      "have_success": false
+    },
+    "264710": {
+      "appid": 264710,
+      "name": "Subnautica"
+    },
+    "268910": {
+      "appid": 268910,
+      "name": "Cuphead",
+      "have_success": true
+    },
+    "272060": {
+      "appid": 272060,
+      "name": "Serena",
+      "have_success": false
+    },
+    "274170": {
+      "appid": 274170,
+      "name": "Hotline Miami 2: Wrong Number"
+    },
+    "274190": {
+      "appid": 274190,
+      "name": "Broforce"
+    },
+    "278910": {
+      "appid": 278910,
+      "name": "Interplanetary",
+      "have_success": true
+    },
+    "280740": {
+      "appid": 280740,
+      "name": "Aperture Tag: The Paint Gun Testing Initiative"
+    },
+    "285160": {
+      "appid": 285160,
+      "name": "LEGO® The Hobbit™"
+    },
+    "289070": {
+      "appid": 289070,
+      "name": "Sid Meier's Civilization VI",
+      "have_success": true
+    },
+    "289130": {
+      "appid": 289130,
+      "name": "ENDLESS™ Legend"
+    },
+    "292120": {
+      "appid": 292120,
+      "name": "FINAL FANTASY XIII",
+      "have_success": true
+    },
+    "294860": {
+      "appid": 294860,
+      "name": "Valkyria Chronicles™",
+      "have_success": true
+    },
+    "296490": {
+      "appid": 296490,
+      "name": "GemCraft - Chasing Shadows",
+      "have_success": true
+    },
+    "298110": {
+      "appid": 298110,
+      "name": "Far Cry 4"
+    },
+    "304240": {
+      "appid": 304240,
+      "name": "Resident Evil",
+      "have_success": true
+    },
+    "310060": {
+      "appid": 310060,
+      "name": "Knights of Pen and Paper 2",
+      "have_success": true
+    },
+    "310950": {
+      "appid": 310950,
+      "name": "Street Fighter V",
+      "have_success": true
+    },
+    "312520": {
+      "appid": 312520,
+      "name": "Rain World"
+    },
+    "313690": {
+      "appid": 313690,
+      "name": "LEGO® Batman™ 3: Beyond Gotham"
+    },
+    "314030": {
+      "appid": 314030,
+      "name": "Guilty Gear X2 #Reload",
+      "have_success": false
+    },
+    "316790": {
+      "appid": 316790,
+      "name": "Grim Fandango Remastered"
+    },
+    "322170": {
+      "appid": 322170,
+      "name": "Geometry Dash",
+      "have_success": true
+    },
+    "323190": {
+      "appid": 323190,
+      "name": "Frostpunk",
+      "have_success": true
+    },
+    "323460": {
+      "appid": 323460,
+      "name": "Raiden IV: OverKill",
+      "have_success": true
+    },
+    "335300": {
+      "appid": 335300,
+      "name": "DARK SOULS™ II: Scholar of the First Sin",
+      "have_success": true
+    },
+    "335670": {
+      "appid": 335670,
+      "name": "LISA",
+      "have_success": true
+    },
+    "337000": {
+      "appid": 337000,
+      "name": "Deus Ex: Mankind Divided™"
+    },
+    "346010": {
+      "appid": 346010,
+      "name": "Besiege"
+    },
+    "346110": {
+      "appid": 346110,
+      "name": "ARK: Survival Evolved",
+      "have_success": true
+    },
+    "356500": {
+      "appid": 356500,
+      "name": "STAR WARS™ Galactic Battlegrounds Saga",
+      "have_success": false
+    },
+    "356910": {
+      "appid": 356910,
+      "name": "Battle Fantasia -Revised Edition-",
+      "have_success": true
+    },
+    "359320": {
+      "appid": 359320,
+      "name": "Elite Dangerous",
+      "have_success": false
+    },
+    "359550": {
+      "appid": 359550,
+      "name": "Tom Clancy's Rainbow Six® Siege X"
+    },
+    "359870": {
+      "appid": 359870,
+      "name": "FINAL FANTASY X/X-2 HD Remaster",
+      "have_success": true
+    },
+    "362890": {
+      "appid": 362890,
+      "name": "Black Mesa"
+    },
+    "363440": {
+      "appid": 363440,
+      "name": "Mega Man Legacy Collection",
+      "have_success": true
+    },
+    "367520": {
+      "appid": 367520,
+      "name": "Hollow Knight",
+      "have_success": true
+    },
+    "374320": {
+      "appid": 374320,
+      "name": "DARK SOULS™ III",
+      "have_success": true
+    },
+    "376870": {
+      "appid": 376870,
+      "name": "Minecraft: Story Mode - A Telltale Games Series"
+    },
+    "377860": {
+      "appid": 377860,
+      "name": "Mushihimesama",
+      "have_success": true
+    },
+    "379720": {
+      "appid": 379720,
+      "name": "DOOM",
+      "have_success": true
+    },
+    "381210": {
+      "appid": 381210,
+      "name": "Dead by Daylight"
+    },
+    "383270": {
+      "appid": 383270,
+      "name": "Hue"
+    },
+    "384310": {
+      "appid": 384310,
+      "name": "Dead In Bermuda"
+    },
+    "387290": {
+      "appid": 387290,
+      "name": "Ori and the Blind Forest: Definitive Edition",
+      "have_success": true
+    },
+    "388750": {
+      "appid": 388750,
+      "name": "BlazBlue: Chronophantasma Extend",
+      "have_success": true
+    },
+    "391220": {
+      "appid": 391220,
+      "name": "Rise of the Tomb Raider"
+    },
+    "403640": {
+      "appid": 403640,
+      "name": "Dishonored 2"
+    },
+    "405310": {
+      "appid": 405310,
+      "name": "LEGO® MARVEL's Avengers"
+    },
+    "406150": {
+      "appid": 406150,
+      "name": "Refunct",
+      "have_success": true
+    },
+    "407530": {
+      "appid": 407530,
+      "name": "ARK: Survival Of The Fittest",
+      "have_success": false
+    },
+    "418670": {
+      "appid": 418670,
+      "name": "Pankapu"
+    },
+    "420530": {
+      "appid": 420530,
+      "name": "OneShot"
+    },
+    "427520": {
+      "appid": 427520,
+      "name": "Factorio",
+      "have_success": true
+    },
+    "438640": {
+      "appid": 438640,
+      "name": "LEGO® STAR WARS™: The Force Awakens",
+      "have_success": true
+    },
+    "439930": {
+      "appid": 439930,
+      "name": "Control Craft 2",
+      "have_success": true
+    },
+    "442070": {
+      "appid": 442070,
+      "name": "Drawful 2",
+      "have_success": true
+    },
+    "464450": {
+      "appid": 464450,
+      "name": "DoDonPachi Resurrection",
+      "have_success": true
+    },
+    "475150": {
+      "appid": 475150,
+      "name": "Titan Quest Anniversary Edition",
+      "have_success": true
+    },
+    "480490": {
+      "appid": 480490,
+      "name": "Prey",
+      "have_success": true
+    },
+    "489630": {
+      "appid": 489630,
+      "name": "Warhammer 40,000: Gladius - Relics of War"
+    },
+    "490080": {
+      "appid": 490080,
+      "name": "Lock's Quest",
+      "have_success": true
+    },
+    "493540": {
+      "appid": 493540,
+      "name": "Figment"
+    },
+    "504230": {
+      "appid": 504230,
+      "name": "Celeste",
+      "have_success": true
+    },
+    "520720": {
+      "appid": 520720,
+      "name": "Dear Esther: Landmark Edition"
+    },
+    "524220": {
+      "appid": 524220,
+      "name": "NieR:Automata™",
+      "have_success": true
+    },
+    "527230": {
+      "appid": 527230,
+      "name": "For The King",
+      "have_success": true
+    },
+    "548430": {
+      "appid": 548430,
+      "name": "Deep Rock Galactic",
+      "have_success": true
+    },
+    "553850": {
+      "appid": 553850,
+      "name": "HELLDIVERS™ 2"
+    },
+    "561770": {
+      "appid": 561770,
+      "name": "Just Ignore Them",
+      "have_success": true
+    },
+    "566160": {
+      "appid": 566160,
+      "name": "Zup! 6",
+      "have_success": true
+    },
+    "568220": {
+      "appid": 568220,
+      "name": "Lobotomy Corporation"
+    },
+    "570940": {
+      "appid": 570940,
+      "name": "DARK SOULS™: REMASTERED",
+      "have_success": true
+    },
+    "582660": {
+      "appid": 582660,
+      "name": "Black Desert"
+    },
+    "586200": {
+      "appid": 586200,
+      "name": "Street Fighter 30th Anniversary Collection",
+      "have_success": true
+    },
+    "590380": {
+      "appid": 590380,
+      "name": "Into the Breach",
+      "have_success": true
+    },
+    "599140": {
+      "appid": 599140,
+      "name": "Graveyard Keeper",
+      "have_success": true
+    },
+    "601150": {
+      "appid": 601150,
+      "name": "Devil May Cry 5"
+    },
+    "606150": {
+      "appid": 606150,
+      "name": "Moonlighter",
+      "have_success": true
+    },
+    "613830": {
+      "appid": 613830,
+      "name": "CHRONO TRIGGER",
+      "have_success": true
+    },
+    "619880": {
+      "appid": 619880,
+      "name": "ATOMEGA"
+    },
+    "623990": {
+      "appid": 623990,
+      "name": "Tom Clancy's Rainbow Six Siege - Test Server"
+    },
+    "632470": {
+      "appid": 632470,
+      "name": "Disco Elysium"
+    },
+    "638230": {
+      "appid": 638230,
+      "name": "Journey"
+    },
+    "640590": {
+      "appid": 640590,
+      "name": "The LEGO® NINJAGO® Movie Video Game"
+    },
+    "646570": {
+      "appid": 646570,
+      "name": "Slay the Spire",
+      "have_success": true
+    },
+    "647830": {
+      "appid": 647830,
+      "name": "LEGO® MARVEL Super Heroes 2"
+    },
+    "650220": {
+      "appid": 650220,
+      "name": "Interplanetary: Enhanced Edition",
+      "have_success": true
+    },
+    "661990": {
+      "appid": 661990,
+      "name": "Arcana Heart 3 LOVEMAX SIXSTARS!!!!!! XTEND",
+      "have_success": true
+    },
+    "675010": {
+      "appid": 675010,
+      "name": "MudRunner",
+      "have_success": true
+    },
+    "683320": {
+      "appid": 683320,
+      "name": "GRIS"
+    },
+    "690040": {
+      "appid": 690040,
+      "name": "SUPERHOT: MIND CONTROL DELETE"
+    },
+    "701160": {
+      "appid": 701160,
+      "name": "Kingdom Two Crowns",
+      "have_success": true
+    },
+    "753640": {
+      "appid": 753640,
+      "name": "Outer Wilds"
+    },
+    "774171": {
+      "appid": 774171,
+      "name": "Muse Dash"
+    },
+    "774361": {
+      "appid": 774361,
+      "name": "Blasphemous",
+      "have_success": true
+    },
+    "782330": {
+      "appid": 782330,
+      "name": "DOOM Eternal",
+      "have_success": true
+    },
+    "798490": {
+      "appid": 798490,
+      "name": "Othercide",
+      "have_success": true
+    },
+    "813780": {
+      "appid": 813780,
+      "name": "Age of Empires II: Definitive Edition",
+      "have_success": true
+    },
+    "814380": {
+      "appid": 814380,
+      "name": "Sekiro™: Shadows Die Twice",
+      "have_success": true
+    },
+    "830370": {
+      "appid": 830370,
+      "name": "Monster Crown",
+      "have_success": true
+    },
+    "858210": {
+      "appid": 858210,
+      "name": "Nova Drift"
+    },
+    "863550": {
+      "appid": 863550,
+      "name": "HITMAN™ 2"
+    },
+    "870200": {
+      "appid": 870200,
+      "name": "Juno: New Origins",
+      "have_success": true
+    },
+    "881100": {
+      "appid": 881100,
+      "name": "Noita"
+    },
+    "883710": {
+      "appid": 883710,
+      "name": "Resident Evil 2",
+      "have_success": true
+    },
+    "896440": {
+      "appid": 896440,
+      "name": "Eternal Edge",
+      "have_success": true
+    },
+    "900010": {
+      "appid": 900010,
+      "name": "Meeple Station",
+      "have_success": true
+    },
+    "953490": {
+      "appid": 953490,
+      "name": "CARRION"
+    },
+    "971620": {
+      "appid": 971620,
+      "name": "Puyo Puyo Champions",
+      "have_success": true
+    },
+    "975680": {
+      "appid": 975680,
+      "name": "METAL SLUG XX",
+      "have_success": true
+    },
+    "976310": {
+      "appid": 976310,
+      "name": "Mortal Kombat 11",
+      "have_success": true
+    },
+    "977950": {
+      "appid": 977950,
+      "name": "A Dance of Fire and Ice"
+    },
+    "1003590": {
+      "appid": 1003590,
+      "name": "Tetris® Effect: Connected",
+      "have_success": true
+    },
+    "1018010": {
+      "appid": 1018010,
+      "name": "Castlevania Anniversary Collection",
+      "have_success": true
+    },
+    "1030300": {
+      "appid": 1030300,
+      "name": "Hollow Knight: Silksong"
+    },
+    "1055540": {
+      "appid": 1055540,
+      "name": "A Short Hike",
+      "have_success": true
+    },
+    "1061910": {
+      "appid": 1061910,
+      "name": "Metal: Hellsinger"
+    },
+    "1069690": {
+      "appid": 1069690,
+      "name": "Rogue Lords",
+      "have_success": true
+    },
+    "1092790": {
+      "appid": 1092790,
+      "name": "Inscryption"
+    },
+    "1105500": {
+      "appid": 1105500,
+      "name": "Yakuza 4 Remastered",
+      "have_success": true
+    },
+    "1113000": {
+      "appid": 1113000,
+      "name": "Persona 4 Golden",
+      "have_success": true
+    },
+    "1139900": {
+      "appid": 1139900,
+      "name": "Ghostrunner"
+    },
+    "1140890": {
+      "appid": 1140890,
+      "name": "Morbid: The Seven Acolytes",
+      "have_success": true
+    },
+    "1145360": {
+      "appid": 1145360,
+      "name": "Hades",
+      "have_success": true
+    },
+    "1151050": {
+      "appid": 1151050,
+      "name": "Golf Gang",
+      "have_success": true
+    },
+    "1155650": {
+      "appid": 1155650,
+      "name": "Shady Knight"
+    },
+    "1173770": {
+      "appid": 1173770,
+      "name": "FINAL FANTASY",
+      "have_success": true
+    },
+    "1173780": {
+      "appid": 1173780,
+      "name": "FINAL FANTASY II",
+      "have_success": true
+    },
+    "1173790": {
+      "appid": 1173790,
+      "name": "FINAL FANTASY III",
+      "have_success": true
+    },
+    "1173800": {
+      "appid": 1173800,
+      "name": "FINAL FANTASY IV",
+      "have_success": true
+    },
+    "1173810": {
+      "appid": 1173810,
+      "name": "FINAL FANTASY V",
+      "have_success": true
+    },
+    "1173820": {
+      "appid": 1173820,
+      "name": "FINAL FANTASY VI",
+      "have_success": true
+    },
+    "1180660": {
+      "appid": 1180660,
+      "name": "Tell Me Why"
+    },
+    "1218210": {
+      "appid": 1218210,
+      "name": "Coromon",
+      "have_success": true
+    },
+    "1229380": {
+      "appid": 1229380,
+      "name": "Everhood",
+      "have_success": true
+    },
+    "1229490": {
+      "appid": 1229490,
+      "name": "ULTRAKILL"
+    },
+    "1237970": {
+      "appid": 1237970,
+      "name": "Titanfall® 2"
+    },
+    "1238060": {
+      "appid": 1238060,
+      "name": "Dead Space™ 3",
+      "have_success": true
+    },
+    "1245620": {
+      "appid": 1245620,
+      "name": "ELDEN RING",
+      "have_success": true
+    },
+    "1283400": {
+      "appid": 1283400,
+      "name": "Steelrising",
+      "have_success": true
+    },
+    "1284950": {
+      "appid": 1284950,
+      "name": "Witcheye",
+      "have_success": true
+    },
+    "1285670": {
+      "appid": 1285670,
+      "name": "Post Void",
+      "have_success": true
+    },
+    "1286350": {
+      "appid": 1286350,
+      "name": "BPM: BULLETS PER MINUTE"
+    },
+    "1287530": {
+      "appid": 1287530,
+      "name": "Lords and Villeins",
+      "have_success": true
+    },
+    "1313140": {
+      "appid": 1313140,
+      "name": "Cult of the Lamb",
+      "have_success": true
+    },
+    "1315980": {
+      "appid": 1315980,
+      "name": "Tin Can",
+      "have_success": true
+    },
+    "1349230": {
+      "appid": 1349230,
+      "name": "5D Chess With Multiverse Time Travel"
+    },
+    "1364780": {
+      "appid": 1364780,
+      "name": "Street Fighter™ 6",
+      "have_success": true
+    },
+    "1369630": {
+      "appid": 1369630,
+      "name": "ENDER LILIES: Quietus of the Knights"
+    },
+    "1375400": {
+      "appid": 1375400,
+      "name": "Ghosts 'n Goblins Resurrection",
+      "have_success": true
+    },
+    "1382330": {
+      "appid": 1382330,
+      "name": "Persona 5 Strikers",
+      "have_success": true
+    },
+    "1388230": {
+      "appid": 1388230,
+      "name": "DANMAKAI: Red Forbidden Fruit",
+      "have_success": true
+    },
+    "1392820": {
+      "appid": 1392820,
+      "name": "Milk inside a bag of milk inside a bag of milk"
+    },
+    "1402120": {
+      "appid": 1402120,
+      "name": "9 Years of Shadows",
+      "have_success": true
+    },
+    "1419160": {
+      "appid": 1419160,
+      "name": "Souldiers",
+      "have_success": true
+    },
+    "1422450": {
+      "appid": 1422450,
+      "name": "Deadlock"
+    },
+    "1451090": {
+      "appid": 1451090,
+      "name": "Tactics Ogre: Reborn",
+      "have_success": true
+    },
+    "1454400": {
+      "appid": 1454400,
+      "name": "Cookie Clicker",
+      "have_success": true
+    },
+    "1498570": {
+      "appid": 1498570,
+      "name": "THE KING OF FIGHTERS XV",
+      "have_success": true
+    },
+    "1507190": {
+      "appid": 1507190,
+      "name": "Machinika Museum"
+    },
+    "1515950": {
+      "appid": 1515950,
+      "name": "Capcom Arcade Stadium",
+      "have_success": true
+    },
+    "1520760": {
+      "appid": 1520760,
+      "name": "Tyrant's Blessing",
+      "have_success": true
+    },
+    "1569200": {
+      "appid": 1569200,
+      "name": "Brewmaster: Beer Brewing Simulator",
+      "have_success": true
+    },
+    "1604000": {
+      "appid": 1604000,
+      "name": "Milk outside a bag of milk outside a bag of milk"
+    },
+    "1608450": {
+      "appid": 1608450,
+      "name": "Hellslave"
+    },
+    "1622910": {
+      "appid": 1622910,
+      "name": "Still Wakes the Deep"
+    },
+    "1672800": {
+      "appid": 1672800,
+      "name": "Space Station Designer Playtest",
+      "have_success": false
+    },
+    "1701520": {
+      "appid": 1701520,
+      "name": "Afterimage",
+      "have_success": true
+    },
+    "1748230": {
+      "appid": 1748230,
+      "name": "RESTLESS SOUL",
+      "have_success": true
+    },
+    "1755830": {
+      "appid": 1755830,
+      "name": "Astrea: Six-Sided Oracles",
+      "have_success": true
+    },
+    "1755910": {
+      "appid": 1755910,
+      "name": "Capcom Arcade 2nd Stadium",
+      "have_success": true
+    },
+    "1794680": {
+      "appid": 1794680,
+      "name": "Vampire Survivors",
+      "have_success": true
+    },
+    "1796470": {
+      "appid": 1796470,
+      "name": "Haste"
+    },
+    "1887840": {
+      "appid": 1887840,
+      "name": "Another Crab's Treasure",
+      "have_success": true
+    },
+    "1898500": {
+      "appid": 1898500,
+      "name": "Worldless"
+    },
+    "1901370": {
+      "appid": 1901370,
+      "name": "Ib"
+    },
+    "1903340": {
+      "appid": 1903340,
+      "name": "Clair Obscur: Expedition 33"
+    },
+    "1932640": {
+      "appid": 1932640,
+      "name": "Suikoden I&II HD Remaster Gate Rune and Dunan Unification Wars",
+      "have_success": true
+    },
+    "1942280": {
+      "appid": 1942280,
+      "name": "Brotato",
+      "have_success": true
+    },
+    "1944240": {
+      "appid": 1944240,
+      "name": "Touch Some Grass"
+    },
+    "1966720": {
+      "appid": 1966720,
+      "name": "Lethal Company"
+    },
+    "1966900": {
+      "appid": 1966900,
+      "name": "20 Minutes Till Dawn",
+      "have_success": true
+    },
+    "1972440": {
+      "appid": 1972440,
+      "name": "Shotgun King: The Final Checkmate",
+      "have_success": true
+    },
+    "1977170": {
+      "appid": 1977170,
+      "name": "Jusant",
+      "have_success": true
+    },
+    "2066020": {
+      "appid": 2066020,
+      "name": "Soulstone Survivors",
+      "have_success": true
+    },
+    "2181610": {
+      "appid": 2181610,
+      "name": "Heretic's Fork",
+      "have_success": true
+    },
+    "2187290": {
+      "appid": 2187290,
+      "name": "Wall World",
+      "have_success": true
+    },
+    "2218750": {
+      "appid": 2218750,
+      "name": "Halls of Torment",
+      "have_success": true
+    },
+    "2221920": {
+      "appid": 2221920,
+      "name": "Immortals Fenyx Rising",
+      "have_success": true
+    },
+    "2238900": {
+      "appid": 2238900,
+      "name": "STAR OCEAN THE SECOND STORY R",
+      "have_success": true
+    },
+    "2273430": {
+      "appid": 2273430,
+      "name": "BlazBlue Entropy Effect",
+      "have_success": true
+    },
+    "2276930": {
+      "appid": 2276930,
+      "name": "Chillquarium",
+      "have_success": true
+    },
+    "2321470": {
+      "appid": 2321470,
+      "name": "Deep Rock Galactic: Survivor"
+    },
+    "2348610": {
+      "appid": 2348610,
+      "name": "Slime 3K: Rise Against Despot",
+      "have_success": true
+    },
+    "2379780": {
+      "appid": 2379780,
+      "name": "Balatro",
+      "have_success": true
+    },
+    "2446550": {
+      "appid": 2446550,
+      "name": "STAR WARS™: Battlefront Classic Collection",
+      "have_success": true
+    },
+    "2515020": {
+      "appid": 2515020,
+      "name": "FINAL FANTASY XVI",
+      "have_success": true
+    },
+    "2622380": {
+      "appid": 2622380,
+      "name": "ELDEN RING NIGHTREIGN",
+      "have_success": true
+    },
+    "2694490": {
+      "appid": 2694490,
+      "name": "Path of Exile 2",
+      "have_success": false
+    },
+    "2725260": {
+      "appid": 2725260,
+      "name": "ENDER MAGNOLIA: Bloom in the Mist"
+    },
+    "2726870": {
+      "appid": 2726870,
+      "name": "Loopstructor",
+      "have_success": true
+    },
+    "2828500": {
+      "appid": 2828500,
+      "name": "The Jackbox Megapicker",
+      "have_success": false
+    },
+    "2881650": {
+      "appid": 2881650,
+      "name": "Content Warning"
+    },
+    "3054090": {
+      "appid": 3054090,
+      "name": "Idle Tower Defense",
+      "have_success": true
+    },
+    "3058630": {
+      "appid": 3058630,
+      "name": "Assetto Corsa EVO",
+      "have_success": false
+    },
+    "3110500": {
+      "appid": 3110500,
+      "name": "The Best Duck Clicker",
+      "have_success": true
+    },
+    "3208560": {
+      "appid": 3208560,
+      "name": "Trainatic",
+      "have_success": true
+    },
+    "3267900": {
+      "appid": 3267900,
+      "name": "Click and Conquer",
+      "have_success": true
+    },
+    "3343160": {
+      "appid": 3343160,
+      "name": "Fill Up The Hole",
+      "have_success": true
+    },
+    "3536380": {
+      "appid": 3536380,
+      "name": "gridkeeper",
+      "have_success": true
+    },
+    "3769130": {
+      "appid": 3769130,
+      "name": "Keep on Mining!",
+      "have_success": true
     }
+  }
 }
