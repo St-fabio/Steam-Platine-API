@@ -1,6 +1,6 @@
 import express from "express";
 import { addUser, getUser, getUserGameAchievements, getUserGames, getUserPlatinumAdvices, getUserPlatinums, getUsers, getUserStats, refreshUserGames, refreshUserPlatinums, updateUser, getUserFriends, addUserFriend, deleteUserFriend, refreshUserStats } from "./src/users.js";
-import { getGame, getGameAchievementInfo, getGameAchievements, getGames } from "./src/games.js";
+import { getGame, getGameAchievementInfo, getGameAchievements, getGames, refreshGameAchievements } from "./src/games.js";
 import { getCategories, getCategory, getCategoryGames, getCategoryStats, refreshCategoryStats } from "./src/category.js";
 
 const app = express();
@@ -35,6 +35,7 @@ app.delete("/users/:userId/friends", deleteUserFriend);
 app.get("/games", getGames);
 app.get("/games/:gameId", getGame);
 app.get("/games/:gameId/achievements", getGameAchievements);
+app.post("/games/:gameId/achievements", refreshGameAchievements);
 app.get("/games/:gameId/achievements/:achievement", getGameAchievementInfo);
 
 
