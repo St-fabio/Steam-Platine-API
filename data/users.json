@@ -265,7 +265,7 @@
         "nb_platine": 13,
         "nb_games": 199,
         "platine_percentage": "7.98",
-        "achievement_percentage": "19.70"
+        "achievement_percentage": "19.71"
       }
     },
     "76561198998408072": {
@@ -558,6 +558,12 @@
         2321470,
         2828500
       ]
+    },
+    "76561199258707453": {
+      "steamId": "76561199258707453",
+      "username": "corinan",
+      "platine": [],
+      "games": []
     }
   }
 }

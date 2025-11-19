@@ -104,7 +104,7 @@ paths:
                   message:
                     type: string
                     example: "Données utilisateur invalides"
-    put:
+    patch:
       tags: [Users]
       summary: Mettre à jour un utilisateur existant
       description: >
@@ -188,7 +188,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Game'
-    post:
+    patch:
       tags: [Users]
       summary: Raffraîchir les jeux d'un utilisateur
       description: >
@@ -291,7 +291,7 @@ paths:
                     type: integer
                     description: Nombre de jeux platinés
                     example: 10
-    post:
+    patch:
       tags: [Users]
       summary: Raffraîchir les stats d'un utilisateur
       description: >
@@ -472,7 +472,7 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Achievement'
-    post:
+    patch:
       tags: [Games]
       summary: Raffraîchir les succès d'un jeu
       description: >
@@ -536,14 +536,14 @@ paths:
                   type: string
                   example: "Action"
                   $ref: '#/components/schemas/Category'
-  /category/{categoryName}:
+  /category/{categoryId}:
     get:
       tags: [Category]
       summary: Récupérer les détails d'une catégorie
       description: >
         Retourne les informations détaillées d'une catégorie de jeux spécifique.
       parameters:
-        - name: categoryName
+        - name: categoryId
           in: path
           required: true
           description: Nom de la catégorie de jeux
@@ -556,14 +556,59 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Category'
-  /category/{categoryName}/games:
+    delete:
+      tags: [Category]
+      summary: Supprimer une catégorie de jeux
+      description: >
+        Permet de supprimer une catégorie de jeux spécifique du système.
+      parameters:
+        - name: categoryId
+          in: path
+          required: true
+          description: Nom de la catégorie de jeux
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Catégorie supprimée avec succès
+  /category/{categoryName}:
+    post:
+      tags: [Category]
+      summary: Ajouter une nouvelle catégorie de jeux
+      description: >
+        Permet d'ajouter une nouvelle catégorie de jeux au système.
+      requestBody:
+        description: Détails de la catégorie à ajouter
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Category'
+      responses:
+        '201':
+          description: Catégorie créée avec succès
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Category'
+        '400':
+          description: Requête invalide
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: "Données de catégorie invalides"
+  /category/{categoryId}/games:
     get:
       tags: [Category]
       summary: Récupérer les jeux par catégorie
       description: >
         Retourne une liste des jeux appartenant à une catégorie spécifique.
       parameters:
-        - name: categoryName
+        - name: categoryId
           in: path
           required: true
           description: Nom de la catégorie de jeux
@@ -578,14 +623,14 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Game'
-  /category/{categoryName}/stats:
+  /category/{categoryId}/stats:
     get:
       tags: [Category]
       summary: Récupérer les statistiques d'une catégorie
       description: >
         Retourne des statistiques agrégées pour une catégorie de jeux spécifique.
       parameters:
-        - name: categoryName
+        - name: categoryId
           in: path
           required: true
           description: Nom de la catégorie de jeux
@@ -610,13 +655,13 @@ paths:
                     type: integer
                     description: Nombre de jeux platinés dans cette catégorie
                     example: 25
-    post:
+    patch:
       tags: [Category]
       summary: Raffraîchir les stats d'une catégorie de jeux
       description: >
         Permet de mettre à jour les statistiques d'une catégorie de jeux en fonction des données les plus récentes.
       parameters:
-        - name: categoryName
+        - name: categoryId
           in: path
           required: true
           description: Nom de la catégorie de jeux

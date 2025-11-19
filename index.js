@@ -1,7 +1,7 @@
 import express from "express";
 import { addUser, getUser, getUserGameAchievements, getUserGames, getUserPlatinumAdvices, getUserPlatinums, getUsers, getUserStats, refreshUserGames, refreshUserPlatinums, updateUser, getUserFriends, addUserFriend, deleteUserFriend, refreshUserStats } from "./src/users.js";
 import { getGame, getGameAchievementInfo, getGameAchievements, getGames, refreshGameAchievements } from "./src/games.js";
-import { getCategories, getCategory, getCategoryGames, getCategoryStats, refreshCategoryStats } from "./src/category.js";
+import { addCategory, addCategoryGames, deleteCategory, getCategories, getCategory, getCategoryGames, getCategoryStats, refreshCategoryStats } from "./src/category.js";
 
 const app = express();
 
@@ -27,7 +27,7 @@ app.get("/users/:userId/stats", getUserStats);
 app.post("/users/:userId/stats", refreshUserStats);
 app.get("/users/:userId/platinum_advice", getUserPlatinumAdvices);
 app.get("/users/:userId/friends", getUserFriends);
-app.post("/users/:userId/friends", addUserFriend);
+app.put("/users/:userId/friends", addUserFriend);
 app.delete("/users/:userId/friends", deleteUserFriend);
 
 
@@ -42,7 +42,10 @@ app.get("/games/:gameId/achievements/:achievement", getGameAchievementInfo);
 // Category endpoints
 app.get("/categories", getCategories);
 app.get("/categories/:categoryId", getCategory);
+app.post("/categories/:name", addCategory);
+app.delete("/categories/:categoryId", deleteCategory);
 app.get("/categories/:categoryId/games", getCategoryGames);
+app.post("/categories/:categoryId/games", addCategoryGames);
 app.get("/categories/:categoryId/stats", getCategoryStats);
 app.post("/categories/:categoryId/stats", refreshCategoryStats);
 

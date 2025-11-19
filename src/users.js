@@ -10,14 +10,21 @@ import { writeFileSync } from 'fs';
 import get_next_platine_advice from "./functions/get_next_platine_advice.js";
 
 export function getUsers(req, res) {
-    res.send(users_data);
+    const users = users_data.users;
+
+    const response = {};
+
+    for (const userId in users) {
+        response[userId] = {steamId: users[userId].steamId, username: users[userId].username, routes: [`get /users/${userId}`]};
+    }
+    res.send(response);
 }
 
 export function getUser(req, res) {
     const userId = req.params.userId;
     const user = users_data.users[userId];
 
-    res.send(user);
+    res.send({user: {steamId: user.steamId, username: user.username}, routes: [`get /users/${userId}/games`, `post /users/${userId}/games`, `get /users/${userId}/platinums`, `post /users/${userId}/platinums`, `get /users/${userId}/stats`, `get /users/${userId}/platinum_advice`, `get /users/${userId}/friends`, `post /users/${userId}/friends`, `delete /users/${userId}/friends`]});
 }
 
 export function addUser(req, res) {
@@ -45,7 +52,7 @@ export async function getUserGames(req, res) {
     const gameFullData =  []
 
     for (let i = 0; i < games.length; i++) {
-        gameFullData.push(games_data.games[games[i]]);
+        gameFullData.push({game: games_data.games[games[i]], routes: [`get /users/${userId}/games/${games[i]}/achievements`]});
     }
 
     res.send(gameFullData);
