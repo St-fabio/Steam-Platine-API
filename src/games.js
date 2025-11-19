@@ -5,23 +5,36 @@ import get_all_achievement_data from "./APICall/get_all_achievement_data.js";
 import { writeFileSync } from 'fs';
 
 export function getGames(req, res) {
-    res.send(Object.values(games_data.games));
+
+    const games = []
+
+    for (const game in games_data.games) {
+        games.push({game: games_data.games[game], routes: [`get games/${games_data.games[game].appid}`]});
+    }
+
+    res.send(games);
 }
 
 export function getGame(req, res) {
-    res.send(games_data.games[req.params.gameId]);
+    res.send({game: games_data.games[req.params.gameId], routes: [`get games/${req.params.gameId}/achievements`, `post games/${req.params.gameId}/achievements`]});
 }
 
 export function getGameAchievements(req, res) {
-    const game = games_data.games[req.params.gameId];
+    const gameId = req.params.gameId;
+    const game = games_data.games[gameId];
 
     let achievements = [];
+    const response = {};
 
     if (game) {
         achievements = achievements_data.games[req.params.gameId] || [];
+
+        for (let i = 0; i < achievements_data.games[gameId].length; i++) {
+            response[achievements_data.games[gameId][i].name] = {achievement: {name: achievements_data.games[gameId][i].name, display_name: achievements_data.games[gameId][i].display_name, description: achievements_data.games[gameId][i].description}, routes: [`get games/${gameId}/achievements/${achievements_data.games[gameId][i].name}`]};   
+        }
     }
 
-    res.send(achievements);
+    res.send(response);
 }
 
 export async function refreshGameAchievements(req, res) {
@@ -32,7 +45,7 @@ export async function refreshGameAchievements(req, res) {
     achievements_data.games[gameId] = all_achievements;
 
     writeFileSync('./data/achievements.json', JSON.stringify(achievements_data, null, 2));
-    res.send("not implemented");
+    res.send("Game achievements refreshed successfully.");
 }
 
 export function getGameAchievementInfo(req, res) {
