@@ -4,6 +4,11 @@ import get_all_achievement_data from "./APICall/get_all_achievement_data.js";
 
 import { writeFileSync } from 'fs';
 
+/**
+ * Send all games available
+ * @param {*} req empty
+ * @param {*} res JSON with all games and their appid and name
+ */
 export function getGames(req, res) {
 
     const games = []
@@ -15,10 +20,20 @@ export function getGames(req, res) {
     res.send(games);
 }
 
+/**
+ * Send details of a specific game
+ * @param {*} req contains gameId in params
+ * @param {*} res JSON with game details and available routes
+ */
 export function getGame(req, res) {
     res.send({game: games_data.games[req.params.gameId], routes: [`get games/${req.params.gameId}/achievements`, `post games/${req.params.gameId}/achievements`]});
 }
 
+/**
+ * Send achievements of a specific game
+ * @param {*} req contains gameId in params
+ * @param {*} res JSON with game achievements
+ */
 export function getGameAchievements(req, res) {
     const gameId = req.params.gameId;
     const game = games_data.games[gameId];
@@ -37,6 +52,11 @@ export function getGameAchievements(req, res) {
     res.send(response);
 }
 
+/**
+ * Refresh achievements of a specific game
+ * @param {*} req contains gameId in params
+ * @param {*} res confirmation message
+ */
 export async function refreshGameAchievements(req, res) {
     const gameId = req.params.gameId;
 
@@ -48,6 +68,11 @@ export async function refreshGameAchievements(req, res) {
     res.send("Game achievements refreshed successfully.");
 }
 
+/**
+ * Send details of a specific achievement of a game
+ * @param {*} req contains gameId and achievement name in params
+ * @param {*} res JSON with achievement details
+ */
 export function getGameAchievementInfo(req, res) {
     const gameId = req.params.gameId;
     const achievementName = req.params.achievement;

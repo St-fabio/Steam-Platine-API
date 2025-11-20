@@ -9,6 +9,11 @@ import get_all_achievement_data from "./APICall/get_all_achievement_data.js";get
 import { writeFileSync } from 'fs';
 import get_next_platine_advice from "./functions/get_next_platine_advice.js";
 
+/**
+ * Send all the users in the database
+ * @param {*} req empty 
+ * @param {*} res JSON with all users and their steamId and username
+ */
 export function getUsers(req, res) {
     const users = users_data.users;
 
@@ -20,6 +25,11 @@ export function getUsers(req, res) {
     res.send(response);
 }
 
+/**
+ * Send details of a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res JSON with user details and available routes
+ */
 export function getUser(req, res) {
     const userId = req.params.userId;
     const user = users_data.users[userId];
@@ -27,6 +37,11 @@ export function getUser(req, res) {
     res.send({user: {steamId: user.steamId, username: user.username}, routes: [`get /users/${userId}/games`, `post /users/${userId}/games`, `get /users/${userId}/platinums`, `post /users/${userId}/platinums`, `get /users/${userId}/stats`, `get /users/${userId}/platinum_advice`, `get /users/${userId}/friends`, `post /users/${userId}/friends`, `delete /users/${userId}/friends`]});
 }
 
+/**
+ * Add a new user
+ * @param {*} req contains userId in params and name in body
+ * @param {*} res confirmation message
+ */
 export function addUser(req, res) {
     const userId = req.params.userId;
 
@@ -41,10 +56,20 @@ export function addUser(req, res) {
     res.send("User added successfully");
 }
 
+/**
+ * Update an existing user
+ * @param {*} req contains userId in params and updated data in body
+ * @param {*} res confirmation message
+ */
 export function updateUser(req, res) {
     res.send("Not implemented yet");
 }
 
+/** 
+ * Get all games of a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res JSON with user's games and available routes
+ */
 export async function getUserGames(req, res) {
     const userId = req.params.userId;
     const games = users_data.users[userId].games
@@ -58,6 +83,11 @@ export async function getUserGames(req, res) {
     res.send(gameFullData);
 }
 
+/**
+ * Refresh the list of games for a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res confirmation message
+ */
 export async function refreshUserGames(req, res) {
     const userId = req.params.userId;
 
@@ -80,6 +110,11 @@ export async function refreshUserGames(req, res) {
     res.send("User games refreshed successfully");
 }
 
+/**
+ * Get achievements of a specific game for a specific user
+ * @param {*} req contains userId and gameId in params
+ * @param {*} res JSON with game achievements
+ */
 export async function getUserGameAchievements(req, res) {
     const userId = req.params.userId;
     const gameId = req.params.gameId;
@@ -99,12 +134,22 @@ export async function getUserGameAchievements(req, res) {
     res.send(game);
 }
 
+/**
+ * Get the list of platined games for a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res JSON with user's platined games
+ */
 export function getUserPlatinums(req, res) {
     const userId = req.params.userId;
 
-    res.send(users_data.users[userId].platine);res.send(users_data[userId].platine);
+    res.send(users_data.users[userId].platine);
 }
 
+/**
+ * Refresh the list of platined games for a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res confirmation message
+ */
 export async function refreshUserPlatinums(req, res) {
     const userId = req.params.userId;
 
@@ -140,6 +185,11 @@ export async function refreshUserPlatinums(req, res) {
     res.send("récup done");
 }
 
+/**
+ * Get stats of a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res JSON with user's stats
+ */
 export async function getUserStats(req, res) {
     const userId = req.params.userId;
 
@@ -148,6 +198,11 @@ export async function getUserStats(req, res) {
     res.send(stats);
 }
 
+/**
+ * Refresh stats of a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res confirmation message
+ */
 export async function refreshUserStats(req, res) {
     const userId = req.params.userId;
 
@@ -200,6 +255,11 @@ export async function refreshUserStats(req, res) {
     res.send("Stats refreshed successfully");
 }
 
+/**
+ * Get platinum advice for a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res JSON with platinum advice
+ */
 export async function getUserPlatinumAdvices(req, res) {
     const userId = req.params.userId;
 
@@ -240,12 +300,22 @@ export async function getUserPlatinumAdvices(req, res) {
     res.send(advices);
 }
 
+/**
+ * Get friends of a specific user
+ * @param {*} req contains userId in params
+ * @param {*} res JSON with user's friends
+ */
 export function getUserFriends(req, res) {
     const userId = req.params.userId;
     
     res.send(users_data.users[userId].friends || []);
 }
 
+/**
+ * Add a friend to a specific user
+ * @param {*} req contains userId in params and friendId in body
+ * @param {*} res confirmation message
+ */
 export function addUserFriend(req, res) {
     const userId = req.params.userId;
 
@@ -268,6 +338,11 @@ export function addUserFriend(req, res) {
     res.send("Friend added successfully");
 }
 
+/**
+ * Delete a friend from a specific user
+ * @param {*} req contains userId in params and friendId in query
+ * @param {*} res confirmation message
+ */
 export function deleteUserFriend(req, res) {
     const userId = req.params.userId;
     const friendId = req.query.friendId;

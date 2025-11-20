@@ -701,15 +701,6 @@ components:
           type: string
           description: Nom d'affichage de l'utilisateur
           example: "FabioGamer"
-        profileUrl:
-          type: string
-          description: URL du profil Steam
-          example: "https://steamcommunity.com/id/fabiogamer"
-        avatarUrl:
-          type: string
-          format: uri
-          description: URL de l'avatar de l'utilisateur
-          example: "https://steamcdn-a.akamaihd.net/steamcommunity/public/images/avatars/fb/fb123456789.jpg"
     
     Game:
       type: object
@@ -725,19 +716,6 @@ components:
           type: string
           description: Nom du jeu
           example: "Dota 2"
-        playtime:
-          type: integer
-          description: Temps de jeu total en minutes
-          example: 1234
-        iconUrl:
-          type: string
-          format: uri
-          description: URL de l'icône du jeu
-          example: "https://steamcdn-a.akamaihd.net/steam/apps/570/header.jpg"
-        isPlatinum:
-          type: boolean
-          description: Indique si l'utilisateur a complété le jeu à 100%
-          example: true
 
     Achievement:
       type: object
@@ -753,19 +731,6 @@ components:
           type: string
           description: Nom du succès
           example: "Maîtrise Totale"
-        description:
-          type: string
-          description: Description du succès
-          example: "Terminer toutes les quêtes principales"
-        achieved:
-          type: boolean
-          description: Indique si le succès a été débloqué par l'utilisateur
-          example: true
-        unlockTime:
-          type: string
-          format: date-time
-          description: Date et heure à laquelle le succès a été débloqué
-          example: "2024-10-15T14:30:00Z"
     Category:
       type: object
       properties:

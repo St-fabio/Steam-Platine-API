@@ -27,3 +27,5 @@ you need to have a steam API key, If you don't have one follow this [steam API K
 ```bash
 node .
 ```
+
+L'api est accessible sur le port 3000
