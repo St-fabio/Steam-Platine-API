@@ -3,7 +3,11 @@ import { addUser, getUser, getUserGameAchievements, getUserGames, getUserPlatinu
 import { getGame, getGameAchievementInfo, getGameAchievements, getGames, refreshGameAchievements } from "./src/games.js";
 import { addCategory, addCategoryGames, deleteCategory, getCategories, getCategory, getCategoryGames, getCategoryStats, refreshCategoryStats } from "./src/category.js";
 import cors from "cors";
+import bcrypt from "bcrypt";
+import { z } from "zod";
+import { signAccessToken } from "./src/auth/token.js";
 import { getDb } from "./src/mongodb/mongo.js";
+import { requireAuth } from "./src/auth/middleware.js";
 
 const app = express();
 
@@ -40,8 +44,8 @@ app.get("/users/:userId/stats", getUserStats);
 app.post("/users/:userId/stats", refreshUserStats);
 app.get("/users/:userId/platinum_advice", getUserPlatinumAdvices);
 app.get("/users/:userId/friends", getUserFriends);
-app.put("/users/:userId/friends", addUserFriend);
-app.delete("/users/:userId/friends", deleteUserFriend);
+app.put("/users/:userId/friends", requireAuth, addUserFriend);
+app.delete("/users/:userId/friends", requireAuth, deleteUserFriend);
 
 
 // Games endpoints
@@ -62,6 +66,51 @@ app.post("/categories/:categoryId/games", addCategoryGames);
 app.get("/categories/:categoryId/stats", getCategoryStats);
 app.post("/categories/:categoryId/stats", refreshCategoryStats);
 
-app.listen(3000, () => {
-  console.log("Server is running on port http://localhost:3000");
+// Auth endpoint
+
+const loginSchema = z.object({
+  username: z
+    .string()
+    .min(3)
+    .max(30)
+    .regex(/^[a-zA-Z0-9_]+$/),
+  password: z.string().min(8).max(200),
+});
+
+app.post("/login", async (req, res) => {
+  const parsed = loginSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ error: "Invalid payload" });
+  }
+
+  const { username, password } = parsed.data;
+
+  const db = await getDb();
+  const user = await db.collection("users").findOne(
+    { username: username.toLowerCase() },
+    { projection: { passwordHash: 1, username: 1 } }
+  );
+
+  // réponse volontairement vague (anti user enumeration)
+  if (!user) {
+    return res.status(401).json({ error: "Invalid credentials" });
+  }
+
+  const ok = await bcrypt.compare(password, user.passwordHash);
+  if (!ok) {
+    return res.status(401).json({ error: "Invalid credentials" });
+  }
+
+  const accessToken = signAccessToken({
+    userId: String(user._id),
+    username: user.username,
+  });
+
+  return res.json({
+    accessToken,
+    user: {
+      id: String(user._id),
+      username: user.username,
+    },
+  });
 });
