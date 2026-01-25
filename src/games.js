@@ -1,8 +1,5 @@
-import games_data from "../data/games.json" with { type: "json" };
-import achievements_data from "../data/achievements.json" with { type: "json" };
 import get_all_achievement_data from "./APICall/get_all_achievement_data.js";
 
-import { writeFileSync } from 'fs';
 import {getDb} from "./mongodb/mongo.js"
 
 /**

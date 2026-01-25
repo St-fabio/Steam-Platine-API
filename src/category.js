@@ -1,7 +1,3 @@
-import categories_data from "../data/categories.json" with { type: "json" };
-
-import { writeFileSync } from 'fs';
-
 /**
  * Send the list of categories
  * @param {*} req empty

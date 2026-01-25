@@ -1,12 +1,7 @@
-import users_data from "../data/users.json" with { type: "json" };
-import games_data from "../data/games.json" with { type: "json" };
-import achievements_data from "../data/achievements.json" with { type: "json" };
-
 import get_player_achievement from "./APICall/get_player_achievement.js";
 import get_all_games from "./APICall/get_all_games.js";
 import get_all_achievement_data from "./APICall/get_all_achievement_data.js";get_all_achievement_data
 
-import { writeFileSync } from 'fs';
 import get_next_platine_advice from "./functions/get_next_platine_advice.js";
 import { getDb } from "./mongodb/mongo.js";
 
