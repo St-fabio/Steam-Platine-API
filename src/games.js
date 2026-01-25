@@ -3,21 +3,32 @@ import achievements_data from "../data/achievements.json" with { type: "json" };
 import get_all_achievement_data from "./APICall/get_all_achievement_data.js";
 
 import { writeFileSync } from 'fs';
+import {getDb} from "./mongodb/mongo.js"
 
 /**
  * Send all games available
  * @param {*} req empty
  * @param {*} res JSON with all games and their appid and name
  */
-export function getGames(req, res) {
+export async function getGames(req, res) {
+  try {
+    const db = await getDb();
 
-    const games = []
+    const games = await db.collection("games")
+      .find({}, { projection: { _id: 0 } })
+      .sort({ name: 1 })
+      .toArray();
 
-    for (const game in games_data.games) {
-        games.push({game: games_data.games[game], routes: [`get games/${games_data.games[game].appid}`]});
-    }
-
-    res.send(games);
+    res.send(
+      games.map((g) => ({
+        game: g,
+        routes: [`get games/${g.appid}`],
+      }))
+    );
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 /**
@@ -25,8 +36,29 @@ export function getGames(req, res) {
  * @param {*} req contains gameId in params
  * @param {*} res JSON with game details and available routes
  */
-export function getGame(req, res) {
-    res.send({game: games_data.games[req.params.gameId], routes: [`get games/${req.params.gameId}/achievements`, `post games/${req.params.gameId}/achievements`]});
+export async function getGame(req, res) {
+  try {
+    const db = await getDb();
+    const gameId = Number(req.params.gameId);
+
+    const game = await db.collection("games").findOne(
+      { appid: gameId },
+      { projection: { _id: 0 } }
+    );
+
+    if (!game) return res.status(404).json({ error: "Game not found" });
+
+    res.send({
+      game,
+      routes: [
+        `get games/${gameId}/achievements`,
+        `post games/${gameId}/achievements`,
+      ],
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 /**
@@ -34,22 +66,40 @@ export function getGame(req, res) {
  * @param {*} req contains gameId in params
  * @param {*} res JSON with game achievements
  */
-export function getGameAchievements(req, res) {
-    const gameId = req.params.gameId;
-    const game = games_data.games[gameId];
+export async function getGameAchievements(req, res) {
+  try {
+    const db = await getDb();
+    const gameId = Number(req.params.gameId);
 
-    let achievements = [];
+    // vérifie que le jeu existe (optionnel, mais proche de ton ancienne logique)
+    const game = await db.collection("games").findOne(
+      { appid: gameId },
+      { projection: { _id: 1 } }
+    );
+
     const response = {};
+    if (!game) return res.send(response);
 
-    if (game) {
-        achievements = achievements_data.games[req.params.gameId] || [];
+    const achs = await db.collection("achievements")
+      .find({ appid: gameId }, { projection: { _id: 0 } })
+      .toArray();
 
-        for (let i = 0; i < achievements_data.games[gameId].length; i++) {
-            response[achievements_data.games[gameId][i].name] = {achievement: {name: achievements_data.games[gameId][i].name, display_name: achievements_data.games[gameId][i].display_name, description: achievements_data.games[gameId][i].description}, routes: [`get games/${gameId}/achievements/${achievements_data.games[gameId][i].name}`]};   
-        }
+    for (const a of achs) {
+      response[a.name] = {
+        achievement: {
+          name: a.name,
+          display_name: a.display_name,
+          description: a.description,
+        },
+        routes: [`get games/${gameId}/achievements/${a.name}`],
+      };
     }
 
     res.send(response);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 /**
@@ -58,28 +108,62 @@ export function getGameAchievements(req, res) {
  * @param {*} res confirmation message
  */
 export async function refreshGameAchievements(req, res) {
-    const gameId = req.params.gameId;
+  try {
+    const db = await getDb();
+    const gameId = Number(req.params.gameId);
 
-    const all_achievements = await get_all_achievement_data(gameId)
+    const all_achievements = await get_all_achievement_data(gameId);
 
-    achievements_data.games[gameId] = all_achievements;
+    // si Steam ne renvoie rien / erreur, évite de casser
+    if (!Array.isArray(all_achievements)) {
+      return res.status(502).json({ error: "Steam API returned invalid data" });
+    }
 
-    writeFileSync('./data/achievements.json', JSON.stringify(achievements_data, null, 2));
+    // Remplace le cache : delete puis insert (simple, efficace)
+    await db.collection("achievements").deleteMany({ appid: gameId });
+
+    if (all_achievements.length > 0) {
+      await db.collection("achievements").insertMany(
+        all_achievements.map((a) => ({
+          appid: gameId,
+          name: a.name,
+          display_name: a.display_name,
+          description: a.description ?? "",
+          icon: a.icon,
+          icongray: a.icongray,
+          hidden: a.hidden,
+        })),
+        { ordered: false }
+      );
+    }
+
     res.send("Game achievements refreshed successfully.");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
-
 /**
  * Send details of a specific achievement of a game
  * @param {*} req contains gameId and achievement name in params
  * @param {*} res JSON with achievement details
  */
-export function getGameAchievementInfo(req, res) {
-    const gameId = req.params.gameId;
+export async function getGameAchievementInfo(req, res) {
+  try {
+    const db = await getDb();
+    const gameId = Number(req.params.gameId);
     const achievementName = req.params.achievement;
 
-    const game_achievements = achievements_data.games[gameId] || [];
+    const achievement = await db.collection("achievements").findOne(
+      { appid: gameId, name: achievementName },
+      { projection: { _id: 0 } }
+    );
 
+    if (!achievement) return res.status(404).json({ error: "Achievement not found" });
 
-    const achievement = game_achievements.find(a => a.name === achievementName);
     res.send(achievement);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }

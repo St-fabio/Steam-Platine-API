@@ -6,55 +6,78 @@
       "platine": [
         {
           "appid": 730,
-          "name": "Counter-Strike 2"
+          "name": "Counter-Strike 2",
+          "have_success": true
         },
         {
           "appid": 406150,
-          "name": "Refunct"
+          "name": "Refunct",
+          "have_success": true
         },
         {
           "appid": 561770,
-          "name": "Just Ignore Them"
+          "name": "Just Ignore Them",
+          "have_success": true
         },
         {
           "appid": 570940,
-          "name": "DARK SOULS™: REMASTERED"
+          "name": "DARK SOULS™: REMASTERED",
+          "have_success": true
         },
         {
           "appid": 1173770,
-          "name": "FINAL FANTASY"
+          "name": "FINAL FANTASY",
+          "have_success": true
         },
         {
           "appid": 1173780,
-          "name": "FINAL FANTASY II"
+          "name": "FINAL FANTASY II",
+          "have_success": true
         },
         {
           "appid": 1245620,
-          "name": "ELDEN RING"
+          "name": "ELDEN RING",
+          "have_success": true
         },
         {
           "appid": 1285670,
-          "name": "Post Void"
+          "name": "Post Void",
+          "have_success": true
         },
         {
           "appid": 3110500,
-          "name": "The Best Duck Clicker"
+          "name": "The Best Duck Clicker",
+          "have_success": true
         },
         {
           "appid": 3267900,
-          "name": "Click and Conquer"
+          "name": "Click and Conquer",
+          "have_success": true
         },
         {
           "appid": 3343160,
-          "name": "Fill Up The Hole"
+          "name": "Fill Up The Hole",
+          "have_success": true
+        },
+        {
+          "appid": 3373670,
+          "name": "Dice People",
+          "have_success": true
         },
         {
           "appid": 3536380,
-          "name": "gridkeeper"
+          "name": "gridkeeper",
+          "have_success": true
         },
         {
           "appid": 3769130,
-          "name": "Keep on Mining!"
+          "name": "Keep on Mining!",
+          "have_success": true
+        },
+        {
+          "appid": 3929760,
+          "name": "Incredicer",
+          "have_success": true
         }
       ],
       "games": [
@@ -119,6 +142,7 @@
         268910,
         272060,
         278910,
+        282800,
         289070,
         292120,
         294860,
@@ -142,6 +166,7 @@
         374320,
         377860,
         379720,
+        386870,
         387290,
         388750,
         406150,
@@ -158,6 +183,7 @@
         524220,
         527230,
         548430,
+        552500,
         561770,
         566160,
         570940,
@@ -171,6 +197,7 @@
         661990,
         675010,
         701160,
+        758190,
         774361,
         782330,
         798490,
@@ -184,6 +211,7 @@
         971620,
         975680,
         976310,
+        1002300,
         1003590,
         1018010,
         1055540,
@@ -218,16 +246,19 @@
         1451090,
         1454400,
         1498570,
+        1510580,
         1515950,
         1520760,
         1569200,
         1672800,
         1701520,
         1748230,
+        1755300,
         1755830,
         1755910,
         1794680,
         1887840,
+        1903340,
         1932640,
         1942280,
         1966900,
@@ -241,12 +272,14 @@
         2238900,
         2273430,
         2276930,
+        2321470,
         2348610,
         2379780,
         2446550,
         2515020,
         2622380,
         2694490,
+        2712380,
         2726870,
         2828500,
         3054090,
@@ -255,17 +288,28 @@
         3208560,
         3267900,
         3343160,
+        3372980,
+        3373670,
+        3405340,
+        3421300,
         3536380,
-        3769130
+        3587610,
+        3618390,
+        3694480,
+        3769130,
+        3929760,
+        3950280,
+        4124950,
+        4209030
       ],
       "friends": [
         "76561198998408072"
       ],
       "stats": {
-        "nb_platine": 13,
-        "nb_games": 199,
-        "platine_percentage": "7.98",
-        "achievement_percentage": "19.71"
+        "nb_platine": 15,
+        "nb_games": 220,
+        "platine_percentage": "8.24",
+        "achievement_percentage": "21.21"
       }
     },
     "76561198998408072": {
@@ -274,75 +318,98 @@
       "platine": [
         {
           "appid": 105600,
-          "name": "Terraria"
+          "name": "Terraria",
+          "have_success": true
         },
         {
           "appid": 264710,
-          "name": "Subnautica"
+          "name": "Subnautica",
+          "have_success": true
         },
         {
           "appid": 420530,
-          "name": "OneShot"
+          "name": "OneShot",
+          "have_success": true
         },
         {
           "appid": 504230,
-          "name": "Celeste"
+          "name": "Celeste",
+          "have_success": true
         },
         {
           "appid": 548430,
-          "name": "Deep Rock Galactic"
+          "name": "Deep Rock Galactic",
+          "have_success": true
         },
         {
           "appid": 553850,
-          "name": "HELLDIVERS™ 2"
+          "name": "HELLDIVERS™ 2",
+          "have_success": true
         },
         {
           "appid": 690040,
-          "name": "SUPERHOT: MIND CONTROL DELETE"
+          "name": "SUPERHOT: MIND CONTROL DELETE",
+          "have_success": true
         },
         {
           "appid": 753640,
-          "name": "Outer Wilds"
+          "name": "Outer Wilds",
+          "have_success": true
         },
         {
           "appid": 953490,
-          "name": "CARRION"
+          "name": "CARRION",
+          "have_success": true
         },
         {
           "appid": 1061910,
-          "name": "Metal: Hellsinger"
+          "name": "Metal: Hellsinger",
+          "have_success": true
         },
         {
           "appid": 1155650,
-          "name": "Shady Knight"
+          "name": "Shady Knight",
+          "have_success": true
+        },
+        {
+          "appid": 1286350,
+          "name": "BPM: BULLETS PER MINUTE",
+          "have_success": true
         },
         {
           "appid": 1369630,
-          "name": "ENDER LILIES: Quietus of the Knights"
+          "name": "ENDER LILIES: Quietus of the Knights",
+          "have_success": true
         },
         {
           "appid": 1392820,
-          "name": "Milk inside a bag of milk inside a bag of milk"
+          "name": "Milk inside a bag of milk inside a bag of milk",
+          "have_success": true
         },
         {
           "appid": 1604000,
-          "name": "Milk outside a bag of milk outside a bag of milk"
+          "name": "Milk outside a bag of milk outside a bag of milk",
+          "have_success": true
         },
         {
           "appid": 1898500,
-          "name": "Worldless"
+          "name": "Worldless",
+          "have_success": true
         },
         {
           "appid": 1901370,
-          "name": "Ib"
+          "name": "Ib",
+          "have_success": true
         },
         {
           "appid": 1944240,
-          "name": "Touch Some Grass"
+          "name": "Touch Some Grass",
+          "have_success": true
         },
         {
           "appid": 2725260,
-          "name": "ENDER MAGNOLIA: Bloom in the Mist"
+          "name": "ENDER MAGNOLIA: Bloom in the Mist",
+          "have_success": true
         }
       ],
       "games": [
@@ -395,13 +462,17 @@
         1155650,
         1229490,
         1237970,
+        1256670,
         1286350,
         1349230,
         1369630,
         1392820,
+        1473350,
         1604000,
         1622910,
+        1649240,
         1796470,
+        1801110,
         1898500,
         1901370,
         1903340,
@@ -409,13 +480,14 @@
         1966720,
         2321470,
         2725260,
-        2881650
+        2881650,
+        3372980
       ],
       "stats": {
         "nb_platine": 18,
         "nb_games": 64,
-        "platine_percentage": "150.00",
-        "achievement_percentage": "52.56"
+        "platine_percentage": "100.00",
+        "achievement_percentage": "50.10"
       }
     },
     "76561198151870100": {
@@ -424,55 +496,68 @@
       "platine": [
         {
           "appid": 220,
-          "name": "Half-Life 2"
+          "name": "Half-Life 2",
+          "have_success": true
         },
         {
           "appid": 35140,
-          "name": "Batman: Arkham Asylum GOTY Edition"
+          "name": "Batman: Arkham Asylum GOTY Edition",
+          "have_success": true
         },
         {
           "appid": 218620,
-          "name": "PAYDAY 2"
+          "name": "PAYDAY 2",
+          "have_success": true
         },
         {
           "appid": 219150,
-          "name": "Hotline Miami"
+          "name": "Hotline Miami",
+          "have_success": true
         },
         {
           "appid": 250320,
-          "name": "The Wolf Among Us"
+          "name": "The Wolf Among Us",
+          "have_success": true
         },
         {
           "appid": 274170,
-          "name": "Hotline Miami 2: Wrong Number"
+          "name": "Hotline Miami 2: Wrong Number",
+          "have_success": true
         },
         {
           "appid": 313690,
-          "name": "LEGO® Batman™ 3: Beyond Gotham"
+          "name": "LEGO® Batman™ 3: Beyond Gotham",
+          "have_success": true
         },
         {
           "appid": 316790,
-          "name": "Grim Fandango Remastered"
+          "name": "Grim Fandango Remastered",
+          "have_success": true
         },
         {
           "appid": 367520,
-          "name": "Hollow Knight"
+          "name": "Hollow Knight",
+          "have_success": true
         },
         {
           "appid": 548430,
-          "name": "Deep Rock Galactic"
+          "name": "Deep Rock Galactic",
+          "have_success": true
         },
         {
           "appid": 553850,
-          "name": "HELLDIVERS™ 2"
+          "name": "HELLDIVERS™ 2",
+          "have_success": true
         },
         {
           "appid": 1030300,
-          "name": "Hollow Knight: Silksong"
+          "name": "Hollow Knight: Silksong",
+          "have_success": true
         },
         {
           "appid": 1092790,
-          "name": "Inscryption"
+          "name": "Inscryption",
+          "have_success": true
         }
       ],
       "games": [
@@ -557,13 +642,76 @@
         1608450,
         2321470,
         2828500
-      ]
+      ],
+      "stats": {
+        "nb_platine": 13,
+        "nb_games": 81,
+        "platine_percentage": "22.03",
+        "achievement_percentage": "43.56"
+      }
     },
     "76561199258707453": {
       "steamId": "76561199258707453",
       "username": "corinan",
-      "platine": [],
-      "games": []
+      "platine": [
+        {
+          "appid": 730,
+          "name": "Counter-Strike 2",
+          "have_success": true
+        }
+      ],
+      "games": [
+        220,
+        320,
+        360,
+        730,
+        3170,
+        4540,
+        25900,
+        48220,
+        63910,
+        105600,
+        203350,
+        204120,
+        208140,
+        226840,
+        241930,
+        242860,
+        249050,
+        262060,
+        289070,
+        289520,
+        292030,
+        346110,
+        356190,
+        367500,
+        378720,
+        407530,
+        475150,
+        489830,
+        502500,
+        570940,
+        677120,
+        807120,
+        813780,
+        1135300,
+        1144200,
+        1222140,
+        1245620,
+        1326470,
+        1488200,
+        1517290,
+        1580520,
+        2066020,
+        2748340,
+        4124950
+      ],
+      "stats": {
+        "nb_platine": 1,
+        "nb_games": 44,
+        "platine_percentage": "2.86",
+        "achievement_percentage": "17.32"
+      }
     }
   }
 }

@@ -8,21 +8,32 @@ import get_all_achievement_data from "./APICall/get_all_achievement_data.js";get
 
 import { writeFileSync } from 'fs';
 import get_next_platine_advice from "./functions/get_next_platine_advice.js";
+import { getDb } from "./mongodb/mongo.js";
+
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /**
  * Send all the users in the database
  * @param {*} req empty 
  * @param {*} res JSON with all users and their steamId and username
  */
-export function getUsers(req, res) {
-    const users = users_data.users;
+export async function getUsers(req, res) {
+  const db = await getDb();
 
-    const response = {};
+  const users = await db.collection("users")
+    .find({}, { projection: { _id: 1, username: 1 } })
+    .toArray();
 
-    for (const userId in users) {
-        response[userId] = {steamId: users[userId].steamId, username: users[userId].username, routes: [`get /users/${userId}`]};
-    }
-    res.send(response);
+  const response = {};
+  for (const u of users) {
+    response[u._id] = {
+      steamId: u._id,
+      username: u.username,
+      routes: [`get /users/${u._id}`],
+    };
+  }
+
+  res.send(response);
 }
 
 /**
@@ -30,31 +41,65 @@ export function getUsers(req, res) {
  * @param {*} req contains userId in params
  * @param {*} res JSON with user details and available routes
  */
-export function getUser(req, res) {
-    const userId = req.params.userId;
-    const user = users_data.users[userId];
+export async function getUser(req, res) {
+  const db = await getDb();
+  const userId = req.params.userId;
 
-    res.send({user: {steamId: user.steamId, username: user.username}, routes: [`get /users/${userId}/games`, `post /users/${userId}/games`, `get /users/${userId}/platinums`, `post /users/${userId}/platinums`, `get /users/${userId}/stats`, `get /users/${userId}/platinum_advice`, `get /users/${userId}/friends`, `post /users/${userId}/friends`, `delete /users/${userId}/friends`]});
+  const user = await db.collection("users").findOne(
+    { _id: userId },
+    { projection: { _id: 1, username: 1 } }
+  );
+
+  if (!user) return res.status(404).send({ error: "User not found" });
+
+  res.send({
+    user: { steamId: user._id, username: user.username },
+    routes: [
+      `get /users/${userId}/games`,
+      `post /users/${userId}/games`,
+      `get /users/${userId}/platinums`,
+      `post /users/${userId}/platinums`,
+      `get /users/${userId}/stats`,
+      `get /users/${userId}/platinum_advice`,
+      `get /users/${userId}/friends`,
+      `post /users/${userId}/friends`,
+      `delete /users/${userId}/friends`,
+    ],
+  });
 }
+
 
 /**
  * Add a new user
  * @param {*} req contains userId in params and name in body
  * @param {*} res confirmation message
  */
-export function addUser(req, res) {
-    const userId = req.params.userId;
+export async function addUser(req, res) {
+  const db = await getDb();
+  const userId = req.params.userId;
 
-    const name = req.body.name;
-    
-    const user = {steamId: userId, username: name, platine: [], games: []}
+  console.log(userId)
 
-    users_data.users[userId] = user;
+  const name = req.body.name;
 
-    writeFileSync('./data/users.json', JSON.stringify(users_data, null, 2));
+  const doc = {
+    _id: userId,          // steamId
+    username: name,
+    platine: [],
+    games: [],
+    friends: [],
+    stats: null,
+  };
 
+  try {
+    await db.collection("users").insertOne(doc);
     res.send("User added successfully");
+  } catch (e) {
+    if (e.code === 11000) return res.status(409).send("User already exists");
+    throw e;
+  }
 }
+
 
 /**
  * Update an existing user
@@ -71,17 +116,31 @@ export function updateUser(req, res) {
  * @param {*} res JSON with user's games and available routes
  */
 export async function getUserGames(req, res) {
-    const userId = req.params.userId;
-    const games = users_data.users[userId].games
+  const db = await getDb();
+  const userId = req.params.userId;
 
-    const gameFullData =  []
+  const user = await db.collection("users").findOne(
+    { _id: userId },
+    { projection: { games: 1 } }
+  );
+  if (!user) return res.status(404).send({ error: "User not found" });
 
-    for (let i = 0; i < games.length; i++) {
-        gameFullData.push({game: games_data.games[games[i]], routes: [`get /users/${userId}/games/${games[i]}/achievements`]});
-    }
+  const appids = user.games ?? [];
 
-    res.send(gameFullData);
+  const games = await db.collection("games")
+    .find({ appid: { $in: appids } }, { projection: { _id: 0 } })
+    .toArray();
+
+  // Pour garder l’ordre de appids (optionnel)
+  const byAppid = new Map(games.map(g => [g.appid, g]));
+  const response = appids
+    .map(appid => byAppid.get(appid))
+    .filter(Boolean)
+    .map(g => ({ game: g, routes: [`get /users/${userId}/games/${g.appid}/achievements`] }));
+
+  res.send(response);
 }
+
 
 /**
  * Refresh the list of games for a specific user
@@ -89,26 +148,31 @@ export async function getUserGames(req, res) {
  * @param {*} res confirmation message
  */
 export async function refreshUserGames(req, res) {
-    const userId = req.params.userId;
+  const db = await getDb();
+  const userId = req.params.userId;
 
-    const games = await get_all_games(userId)
+  const games = await get_all_games(userId);
 
-    console.log(games);
+  const appids = [];
+  const bulk = db.collection("games").initializeUnorderedBulkOp();
 
-    const games_appids = [] 
+  for (const g of games) {
+    appids.push(g.appid);
+    bulk.find({ appid: g.appid }).upsert().updateOne({
+      $set: { appid: g.appid, name: g.name, have_success: g.has_community_visible_stats || false },
+    });
+  }
 
-    for (let i = 0; i < games.length; i++) {
-        games_appids.push(games[i].appid);
-        games_data.games[games[i].appid] = {appid: games[i].appid, name: games[i].name, have_success: games[i].has_community_visible_stats || false};
-    }
+  if (games.length) await bulk.execute();
 
-    users_data.users[userId].games = games_appids;
+  await db.collection("users").updateOne(
+    { _id: userId },
+    { $set: { games: appids } }
+  );
 
-    writeFileSync('./data/games.json', JSON.stringify(games_data, null, 2));
-    writeFileSync('./data/users.json', JSON.stringify(users_data, null, 2));
-
-    res.send("User games refreshed successfully");
+  res.send("User games refreshed successfully");
 }
+
 
 /**
  * Get achievements of a specific game for a specific user
@@ -116,33 +180,75 @@ export async function refreshUserGames(req, res) {
  * @param {*} res JSON with game achievements
  */
 export async function getUserGameAchievements(req, res) {
+  try {
     const userId = req.params.userId;
-    const gameId = req.params.gameId;
+    const gameId = Number(req.params.gameId); // appid en nombre
 
-    const game = await get_player_achievement(gameId, userId)
+    // 1) Achievements du joueur (ce que tu renvoies)
+    const playerAchievements = await get_player_achievement(gameId, userId);
 
-    let all_achievements
+    // 2) Cache Mongo des achievements du jeu (définitions)
+    const db = await getDb();
+    const achievementsCol = db.collection("achievements");
 
-    if (!achievements_data.games[gameId]) { 
-        all_achievements = await get_all_achievement_data(gameId)
+    // Si aucune définition en DB pour ce jeu, on la récupère et on l'enregistre
+    const alreadyCached = await achievementsCol.findOne(
+      { appid: gameId },
+      { projection: { _id: 1 } }
+    );
 
-        achievements_data.games[gameId] = all_achievements;
+    if (!alreadyCached) {
+      const allAchievements = await get_all_achievement_data(gameId);
 
-        writeFileSync('./data/achievements.json', JSON.stringify(achievements_data, null, 2));
+      if (Array.isArray(allAchievements) && allAchievements.length > 0) {
+        // Insert en masse + ignore duplicates au cas où (course condition)
+        // On normalise les champs utiles.
+        const docs = allAchievements.map((a) => ({
+          appid: gameId,
+          name: a.name,
+          display_name: a.display_name,
+          description: a.description,
+          // garde d'autres champs si présents
+          icon: a.icon,
+          icongray: a.icongray,
+          hidden: a.hidden,
+        }));
+
+        try {
+          await achievementsCol.insertMany(docs, { ordered: false });
+        } catch (e) {
+          // Si index unique, insertMany peut lever des duplicate key en course condition.
+          // On ignore si c'est juste des doublons.
+          if (e?.code !== 11000) throw e;
+        }
+      }
     }
 
-    res.send(game);
+    return res.send(playerAchievements);
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ error: "Internal server error" });
+  }
 }
+
 
 /**
  * Get the list of platined games for a specific user
  * @param {*} req contains userId in params
  * @param {*} res JSON with user's platined games
  */
-export function getUserPlatinums(req, res) {
-    const userId = req.params.userId;
+export async function getUserPlatinums(req, res) {
+  const db = await getDb();
+  const userId = req.params.userId;
 
-    res.send(users_data.users[userId].platine);
+  const user = await db.collection("users").findOne(
+    { _id: userId },
+    { projection: { platine: 1 } }
+  );
+
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  res.send(user.platine ?? []);
 }
 
 /**
@@ -151,39 +257,64 @@ export function getUserPlatinums(req, res) {
  * @param {*} res confirmation message
  */
 export async function refreshUserPlatinums(req, res) {
+  try {
+    const db = await getDb();
     const userId = req.params.userId;
 
-    const platinedGames = []
+    // 1) Récupère la liste des appids du user
+    const user = await db.collection("users").findOne(
+      { _id: userId },
+      { projection: { games: 1 } }
+    );
 
-    for (let i = 0; i < users_data.users[userId].games.length; i++) {
-        setTimeout(() => {}, 10);
-        const game = await get_player_achievement(users_data.users[userId].games[i], userId)
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-        let platined = true
+    const userGames = user.games ?? [];
+    const platinedAppids = [];
 
-        if (game) {
-            for (let j = 0; j < game.length; j++) {
-                if (game[j].achieved === 0) {
-                    platined = false
-                }
-            }
+    // 2) Pour chaque jeu, check si tous les achievements sont achieved=1
+    for (const appid of userGames) {
+      // petit throttle optionnel pour éviter de spam l'API Steam
+      await sleep(50);
 
-            if (platined) {
-                platinedGames.push(games_data.games[users_data.users[userId].games[i]]);
-            }   
+      const ach = await get_player_achievement(appid, userId);
+
+      if (!ach || !Array.isArray(ach) || ach.length === 0) continue;
+
+      let platined = true;
+      for (const a of ach) {
+        if (a.achieved === 0) {
+          platined = false;
+          break;
         }
+      }
+
+      if (platined) platinedAppids.push(appid);
     }
 
-    const user = users_data.users[userId];
-    
-    user["platine"] = platinedGames
+    // 3) Récupère les infos des jeux en DB (games collection)
+    let platinedGames = [];
+    if (platinedAppids.length > 0) {
+      platinedGames = await db.collection("games")
+        .find({ appid: { $in: platinedAppids } }, { projection: { _id: 0 } })
+        .toArray();
+    }
 
-    users_data.users[userId] = user;
+    console.log(platinedGames.length)
 
-    writeFileSync('./data/users.json', JSON.stringify(users_data, null, 2));
+    // 4) Sauvegarde dans l'utilisateur
+    await db.collection("users").updateOne(
+      { _id: userId },
+      { $set: { platine: platinedGames } }
+    );
 
     res.send("récup done");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
+
 
 /**
  * Get stats of a specific user
@@ -191,11 +322,19 @@ export async function refreshUserPlatinums(req, res) {
  * @param {*} res JSON with user's stats
  */
 export async function getUserStats(req, res) {
-    const userId = req.params.userId;
+  const db = await getDb();
+  const userId = req.params.userId;
 
-    const stats = users_data.users[userId].stats;
+  const user = await db.collection("users").findOne(
+    { _id: userId },
+    { projection: { stats: 1 } }
+  );
 
-    res.send(stats);
+  console.log(user.stats)
+
+  if (!user) return res.status(404).json({ error: "User not found" });
+
+  res.send(user.stats ?? null);
 }
 
 /**
@@ -204,56 +343,77 @@ export async function getUserStats(req, res) {
  * @param {*} res confirmation message
  */
 export async function refreshUserStats(req, res) {
+  try {
+    const db = await getDb();
     const userId = req.params.userId;
 
-    const nb_platine = users_data.users[userId].platine.length;
+    // Récup user (games + platine)
+    const user = await db.collection("users").findOne(
+      { _id: userId },
+      { projection: { games: 1, platine: 1 } }
+    );
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    const nb_games = users_data.users[userId].games.length;
+    const gamesAppids = user.games ?? [];
+    const nb_games = gamesAppids.length;
 
-    let nb_games_with_achievements = 0;
-    const games = users_data.users[userId].games;
-    for (let i = 0; i < games.length; i++) {
-        if (games_data.games[games[i]].have_success) {
-            nb_games_with_achievements++;
-        }
+    // platine = objets games (ton choix actuel)
+    const nb_platine = (user.platine ?? []).length;
+
+    // Compte des jeux ayant des achievements (have_success=true)
+    // (plus fiable que relire côté users)
+    const nb_games_with_achievements = await db.collection("games").countDocuments({
+      appid: { $in: gamesAppids },
+      have_success: true,
+    });
+
+    // Ratios d'achievements (Steam API)
+    const ratios = [];
+
+    for (const appid of gamesAppids) {
+      await sleep(50); // throttle léger
+
+      const ach = await get_player_achievement(appid, userId);
+      if (!ach || !Array.isArray(ach) || ach.length === 0) continue;
+
+      let nb_success = 0;
+      for (const a of ach) {
+        if (a.achieved === 1) nb_success++;
+      }
+
+      ratios.push(nb_success / ach.length);
     }
 
-    let ratios = [];
+    const average_ratio =
+      ratios.length > 0 ? ratios.reduce((a, b) => a + b, 0) / ratios.length : 0;
 
-    for (let i = 0; i < users_data.users[userId].games.length; i++) {
-        setTimeout(() => {}, 10);
-        const game = await get_player_achievement(users_data.users[userId].games[i], userId)
+    const platine_percentage =
+      nb_games_with_achievements > 0
+        ? ((nb_platine / nb_games_with_achievements) * 100).toFixed(2)
+        : "0.00";
 
-        let nb_success = 0;
+    const achievement_percentage = (average_ratio * 100).toFixed(2);
 
-        if (game) {
-            for (let j = 0; j < game.length; j++) {
-                if (game[j].achieved === 1) {
-                    nb_success++;
-                }
-            } 
-            const ratio = nb_success / game.length;
-            ratios.push(ratio);
-        }
-    }
+    const stats = {
+      nb_platine,
+      nb_games,
+      platine_percentage,
+      achievement_percentage,
+    };
 
-    const average_ratio = ratios.reduce((a, b) => a + b, 0) / ratios.length;
-    
-    const user = users_data.users[userId];
-
-    user["stats"] = {
-        "nb_platine": nb_platine,
-        "nb_games": nb_games,
-        "platine_percentage": ((nb_platine / nb_games_with_achievements) * 100).toFixed(2),
-        "achievement_percentage": (average_ratio * 100).toFixed(2)
-    }
-
-    users_data.users[userId] = user;
-
-    writeFileSync('./data/users.json', JSON.stringify(users_data, null, 2));
+    // Sauvegarde en DB
+    await db.collection("users").updateOne(
+      { _id: userId },
+      { $set: { stats } }
+    );
 
     res.send("Stats refreshed successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
+
 
 /**
  * Get platinum advice for a specific user
@@ -261,43 +421,72 @@ export async function refreshUserStats(req, res) {
  * @param {*} res JSON with platinum advice
  */
 export async function getUserPlatinumAdvices(req, res) {
+  try {
+    const db = await getDb();
     const userId = req.params.userId;
 
-    const game_not_completed = []
+    const user = await db.collection("users").findOne(
+      { _id: userId },
+      { projection: { games: 1, platine: 1 } }
+    );
 
-    for (let i = 0; i < users_data.users[userId].games.length; i++) {
-        let is_platined = false;
-        for (let j = 0; j < users_data.users[userId].platine.length; j++) {
-            if (users_data.users[userId].games[i] === users_data.users[userId].platine[j].appid) {
-                is_platined = true;
-            }
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    const userGames = user.games ?? [];
+    const userPlatine = user.platine ?? [];
+
+    const platinedAppids = new Set(userPlatine.map((g) => g.appid));
+
+    const games = await db.collection("games")
+      .find({ appid: { $in: userGames } }, { projection: { _id: 0 } })
+      .toArray();
+
+    const gameByAppid = new Map(games.map((g) => [g.appid, g]));
+
+    const game_not_completed = [];
+
+    for (let i = 0; i < userGames.length; i++) {
+      const appid = userGames[i];
+
+      let is_platined = false;
+      for (let j = 0; j < userPlatine.length; j++) {
+        if (appid === userPlatine[j].appid) {
+          is_platined = true;
         }
-        if (!is_platined) {
-            let result = await get_player_achievement(games_data.games[users_data.users[userId].games[i]].appid, userId);
+      }
 
-            if (result != undefined) {
-                let nb_remaining_achievement = 0;
-                let last_achievement = 0;
+      if (!is_platined) {
+        const gameObj = gameByAppid.get(appid);
+        if (!gameObj) continue;
 
-                for (let i = 0; i < result.length; i++) {
-                    if (result[i].achieved == 0) {
-                        nb_remaining_achievement++
-                    }
-                    if (result[i].unlocktime > last_achievement) {
-                        last_achievement = result[i].unlocktime
-                    }
-                }
+        const result = await get_player_achievement(gameObj.appid, userId);
 
-                const average =  ((result.length - nb_remaining_achievement) / result.length) * 100
+        if (result != undefined) {
+          let nb_remaining_achievement = 0;
+          let last_achievement = 0;
 
-                game_not_completed.push({"game": games_data.games[users_data.users[userId].games[i]], "completion": average, "remaining": nb_remaining_achievement});
-            }
+          for (let k = 0; k < result.length; k++) {
+            if (result[k].achieved == 0) nb_remaining_achievement++;
+            if (result[k].unlocktime > last_achievement) last_achievement = result[k].unlocktime;
+          }
+
+          const average = ((result.length - nb_remaining_achievement) / result.length) * 100;
+
+          game_not_completed.push({
+            game: gameObj,
+            completion: average,
+            remaining: nb_remaining_achievement,
+          });
         }
+      }
     }
 
     const advices = get_next_platine_advice(game_not_completed, 5);
-    
     res.send(advices);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 /**
@@ -305,10 +494,23 @@ export async function getUserPlatinumAdvices(req, res) {
  * @param {*} req contains userId in params
  * @param {*} res JSON with user's friends
  */
-export function getUserFriends(req, res) {
+export async function getUserFriends(req, res) {
+  try {
+    const db = await getDb();
     const userId = req.params.userId;
-    
-    res.send(users_data.users[userId].friends || []);
+
+    const user = await db.collection("users").findOne(
+      { _id: userId },
+      { projection: { friends: 1 } }
+    );
+
+    if (!user) return res.status(404).json({ error: "User not found" });
+
+    res.send(user.friends || []);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 /**
@@ -316,26 +518,30 @@ export function getUserFriends(req, res) {
  * @param {*} req contains userId in params and friendId in body
  * @param {*} res confirmation message
  */
-export function addUserFriend(req, res) {
+export async function addUserFriend(req, res) {
+  try {
+    const db = await getDb();
     const userId = req.params.userId;
+    const friendId = req.body?.friendId;
 
-    console.log(req.body);
-
-    const friendId = req.body.friendId;
-
-    console.log(friendId);
-
-    if (!users_data.users[userId].friends) {
-        users_data.users[userId].friends = [];
+    if (!friendId) {
+      return res.status(400).json({ error: "Missing friendId" });
     }
 
-    if (!users_data.users[userId].friends.includes(friendId)) {
-        users_data.users[userId].friends.push(friendId);
+    const result = await db.collection("users").updateOne(
+      { _id: userId },
+      { $addToSet: { friends: friendId } }
+    );
 
-        writeFileSync('./data/users.json', JSON.stringify(users_data, null, 2));
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
     }
 
     res.send("Friend added successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
 
 /**
@@ -343,19 +549,28 @@ export function addUserFriend(req, res) {
  * @param {*} req contains userId in params and friendId in query
  * @param {*} res confirmation message
  */
-export function deleteUserFriend(req, res) {
+export async function deleteUserFriend(req, res) {
+  try {
+    const db = await getDb();
     const userId = req.params.userId;
     const friendId = req.query.friendId;
 
-    if (users_data.users[userId].friends) {
-        for (let i = 0; i < users_data.users[userId].friends.length; i++) {
-            if (users_data.users[userId].friends[i] === friendId) {
-                users_data.users[userId].friends.splice(i, 1);
-            }
-        }
+    if (!friendId) {
+      return res.status(400).json({ error: "Missing friendId" });
+    }
 
-        writeFileSync('./data/users.json', JSON.stringify(users_data, null, 2));
+    const result = await db.collection("users").updateOne(
+      { _id: userId },
+      { $pull: { friends: friendId } }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).json({ error: "User not found" });
     }
 
     res.send("Friend deleted successfully");
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 }
