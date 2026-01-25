@@ -8,12 +8,8 @@ import { getDb } from "./mongodb/mongo.js";
 import bcrypt from "bcrypt";
 import { z } from "zod";
 
-const createUserSchema = z.object({
-  username: z
-    .string()
-    .min(3)
-    .max(30)
-    .regex(/^[a-zA-Z0-9_]+$/),
+const loginSchema = z.object({
+  username: z.string().min(3).max(30),
   password: z.string().min(8).max(200),
 });
 
