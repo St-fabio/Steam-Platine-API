@@ -2,16 +2,29 @@ import express from "express";
 import { addUser, getUser, getUserGameAchievements, getUserGames, getUserPlatinumAdvices, getUserPlatinums, getUsers, getUserStats, refreshUserGames, refreshUserPlatinums, updateUser, getUserFriends, addUserFriend, deleteUserFriend, refreshUserStats } from "./src/users.js";
 import { getGame, getGameAchievementInfo, getGameAchievements, getGames, refreshGameAchievements } from "./src/games.js";
 import { addCategory, addCategoryGames, deleteCategory, getCategories, getCategory, getCategoryGames, getCategoryStats, refreshCategoryStats } from "./src/category.js";
+import cors from "cors";
+import { getDb } from "./src/mongodb/mongo.js";
 
 const app = express();
 
+await (async () => {
+  const db = await getDb();
+
+  await db.collection("users").createIndex({ steamId: 1 }, { unique: true });
+  await db.collection("games").createIndex({ appid: 1 }, { unique: true });
+  await db.collection("achievements").createIndex({ appid: 1, name: 1 }, { unique: true });
+
+  console.log("[mongo] indexes ensured");
+})();
+
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cors());
 
 app.get("/", (req, res) => {
   res.send("Welcome on Steam Platine API !");
 });
-
 
 // Users endpoints
 app.get("/users", getUsers);

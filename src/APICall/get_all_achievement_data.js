@@ -9,9 +9,13 @@ async function get_all_achievement_data(appid) {
 
     const data = await response.json()
 
-    //console.log(data.game.availableGameStats.achievements)
+    const game = data?.game;
+    const available = game?.availableGameStats;
+    const achievements = available?.achievements;
 
-    return data.game.availableGameStats.achievements
+    if (!Array.isArray(achievements)) {
+        return achievements
+    }
 }
 
 export default get_all_achievement_data
