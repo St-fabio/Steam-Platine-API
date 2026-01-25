@@ -5,6 +5,18 @@ import get_all_achievement_data from "./APICall/get_all_achievement_data.js";get
 import get_next_platine_advice from "./functions/get_next_platine_advice.js";
 import { getDb } from "./mongodb/mongo.js";
 
+import bcrypt from "bcrypt";
+import { z } from "zod";
+
+const createUserSchema = z.object({
+  username: z
+    .string()
+    .min(3)
+    .max(30)
+    .regex(/^[a-zA-Z0-9_]+$/),
+  password: z.string().min(8).max(200),
+});
+
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 /**
@@ -70,27 +82,38 @@ export async function getUser(req, res) {
  * @param {*} res confirmation message
  */
 export async function addUser(req, res) {
+  const parsed = createUserSchema.safeParse(req.body);
+  if (!parsed.success) {
+    return res.status(400).json({ error: "Invalid payload" });
+  }
+
   const db = await getDb();
-  const userId = req.params.userId;
+  const steamId = req.params.userId; // OK si SteamID fiable
 
-  console.log(userId)
+  const { username, password } = parsed.data;
 
-  const name = req.body.name;
+  const passwordHash = await bcrypt.hash(password, 12);
 
   const doc = {
-    _id: userId,          // steamId
-    username: name,
+    _id: steamId,
+    username: username,
+    passwordHash,
+
     platine: [],
     games: [],
     friends: [],
     stats: null,
+
+    createdAt: new Date(),
   };
 
   try {
     await db.collection("users").insertOne(doc);
-    res.send("User added successfully");
+    return res.status(201).send("User created");
   } catch (e) {
-    if (e.code === 11000) return res.status(409).send("User already exists");
+    if (e.code === 11000) {
+      return res.status(409).send("User already exists");
+    }
     throw e;
   }
 }
