@@ -9,7 +9,7 @@ import { signAccessToken } from "./src/auth/token.js";
 import { getDb } from "./src/mongodb/mongo.js";
 import { requireAuth } from "./src/auth/middleware.js";
 
-const port = process.env.API_PORT;
+const port = process.env.PORT;
 
 const app = express();
 
