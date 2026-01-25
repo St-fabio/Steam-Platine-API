@@ -71,11 +71,7 @@ app.post("/categories/:categoryId/stats", refreshCategoryStats);
 // Auth endpoint
 
 const loginSchema = z.object({
-  username: z
-    .string()
-    .min(3)
-    .max(30)
-    .regex(/^[a-zA-Z0-9_]+$/),
+  username: z.string().min(3).max(30),
   password: z.string().min(8).max(200),
 });
 
